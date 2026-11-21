@@ -39,6 +39,7 @@ export function ChapterReadingFlow({ chapterId, onBack }: Props) {
   const [storyContent,setStoryContent]=useState('')
   const [missionInstruction,setMissionInstruction]=useState('')
   const [saving,setSaving]=useState(false)
+  const [saveError,setSaveError]=useState<string|null>(null)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -85,13 +86,13 @@ export function ChapterReadingFlow({ chapterId, onBack }: Props) {
 
   async function saveStory(complete:boolean) {
     if(!chapter||saving)return
-    setSaving(true);setError(null)
+    setSaving(true);setSaveError(null)
     try {
       const updated=await chapterApi.write(chapter.id,{title:storyTitle.trim(),content:storyContent.trim(),missionInstruction:missionInstruction.trim()})
       const result=complete?await chapterApi.complete(chapter.id):updated
       setChapter(result)
       if(complete)setScreen('opening')
-    } catch(cause) { setError(cause instanceof Error?cause.message:'이야기를 저장하지 못했어요.') } finally { setSaving(false) }
+    } catch(cause) { setSaveError(cause instanceof Error?cause.message:'이야기를 저장하지 못했어요.') } finally { setSaving(false) }
   }
 
   function goBack() {
@@ -177,7 +178,7 @@ export function ChapterReadingFlow({ chapterId, onBack }: Props) {
                 <label>이야기 제목<input value={storyTitle} maxLength={200} onChange={e=>setStoryTitle(e.target.value)} /></label>
                 <label>나의 이야기<textarea value={storyContent} maxLength={20000} onChange={e=>setStoryContent(e.target.value)} /></label>
                 <label>가족에게 보낼 미션<textarea value={missionInstruction} maxLength={2000} onChange={e=>setMissionInstruction(e.target.value)} /></label>
-                {error&&<p role="alert">{error}</p>}
+                {saveError&&<p role="alert">{saveError}</p>}
                 <button className="chapter-primary-button" disabled={saving||!storyTitle.trim()||!storyContent.trim()||!missionInstruction.trim()} onClick={()=>void saveStory(false)}>{saving?'저장 중…':'임시 저장'}</button>
                 <button className="chapter-primary-button" disabled={saving||!storyTitle.trim()||!storyContent.trim()||!missionInstruction.trim()} onClick={()=>void saveStory(true)}>{saving?'완료 중…':'작성 완료'}</button>
               </section>
