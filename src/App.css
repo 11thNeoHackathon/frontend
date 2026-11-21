@@ -511,7 +511,7 @@ button { font: inherit; }
 .relationship-input-wrap {
   height: 48px;
   padding: 0 12px;
-  border: 1px solid var(--color-main-50);
+  border: 1px solid var(--color-gray-40);
   display: flex;
   align-items: center;
   background: var(--color-white);
@@ -531,10 +531,6 @@ button { font: inherit; }
 .relationship-input-wrap input::placeholder {
   color: var(--color-gray-40);
 }
-
-.relationship-input-wrap small { color: var(--color-gray-30); }
-
-.input-note { margin-top: 28px; }
 
 .primary-button:disabled {
   color: var(--color-gray-40);
