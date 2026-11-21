@@ -9,7 +9,7 @@ import copyIcon from '../../assets/hifi/copy.svg'
 import ribbonGreen from '../../assets/hifi/ribbon-green.svg'
 import ribbonPink from '../../assets/hifi/ribbon-pink.svg'
 
-type Step = 'list' | 'chapter' | 'story' | 'home-mission' | 'reflection' | 'home-next' | 'postcards' | 'home-done' | 'relationship' | 'home-invite' | 'invite' | 'arrival'
+type Step = 'list' | 'chapter' | 'story' | 'list-created' | 'reflection' | 'list-ready' | 'postcards' | 'home-done' | 'relationship' | 'invite' | 'arrival'
 const family = [
   { name: '엄마', art: momArt }, { name: '아빠', art: dadArt },
   { name: '할머니', art: grandmaArt }, { name: '할아버지', art: grandpaArt },
@@ -28,7 +28,7 @@ export function DemoVideoFlow() {
   const inviteUrl = `${window.location.origin}/demo?invite=mom`
 
   const back = () => {
-    const previous: Record<Step, Step> = { list: 'list', chapter: 'list', story: 'chapter', 'home-mission': 'story', reflection: 'home-mission', 'home-next': 'reflection', postcards: 'home-next', 'home-done': 'postcards', relationship: 'home-done', 'home-invite': 'relationship', invite: 'home-invite', arrival: 'invite' }
+    const previous: Record<Step, Step> = { list: 'list', chapter: 'list', story: 'chapter', 'list-created': 'story', reflection: 'list-created', 'list-ready': 'reflection', postcards: 'list-ready', 'home-done': 'postcards', relationship: 'home-done', invite: 'relationship', arrival: 'invite' }
     setStep(previous[step])
   }
   const header = (label: string, canBack = true) => <header className="demo-nav"><button aria-label="뒤로" disabled={!canBack} onClick={back}>‹</button><span>{label}</span><span className="nav-spacer" /></header>
@@ -37,10 +37,8 @@ export function DemoVideoFlow() {
   return <main className={`demo-shell demo-step-${step}`} lang="ko">
     {step === 'list' && <>
       <section className="demo-list-hero"><div className="demo-brand">RE Post</div><h1>엄마 <span>↝</span> 나</h1><p>현재 열람 가능한 엽서가 <b>1</b>개 있어요!</p><div className="hero-postcard"><img src={postcardArt} alt=""/><small>엽서를 눌러보세요!</small></div></section>
-      <section className="demo-list-body"><div className="section-heading"><h2>지금까지 나눈 엽서 <b>2</b>개</h2><button aria-label="챕터 추가" onClick={() => setStep('chapter')}>＋</button></div>
+      <section className="demo-list-body"><div className="section-heading"><h2>지금까지 나눈 엽서 <b>1</b>개</h2><button aria-label="챕터 추가" onClick={() => setStep('chapter')}>＋</button></div>
         <div className="chapter-row"><span>01</span><div><strong>초등학생 시절</strong><small>열람 가능</small></div><button aria-label="초등학생 시절 열기" onClick={() => setStep('postcards')}>›</button></div>
-        <div className="chapter-row"><span>02</span><div><strong>중학교 시절</strong><small className="green-tag">엄마와 나의 이야기</small></div><button aria-label="중학교 시절 열기" onClick={() => setStep('chapter')}>›</button></div>
-        {footer('중학교 시절 이어서 만들기', () => setStep('chapter'))}
       </section>
     </>}
 
@@ -53,21 +51,27 @@ export function DemoVideoFlow() {
     {step === 'story' && <>
       {header('추억과 미션 건네기')}
       <section className="demo-form"><p className="chapter-kicker">chapter. 04</p><h1>{title || '중학교 시절 이야기'}</h1><label htmlFor="story-title">제목</label><input id="story-title" value={story.split('\n')[0] || ''} onChange={e => setStory(`${e.target.value}${story.includes('\n') ? story.slice(story.indexOf('\n')) : ''}`)} placeholder="" /><label htmlFor="story-body">나의 추억을 적어주세요</label><textarea wrap="soft" spellCheck={false} id="story-body" value={story.includes('\n') ? story.slice(story.indexOf('\n') + 1) : ''} onChange={e => setStory(`${story.split('\n')[0] || ''}\n${e.target.value}`)} placeholder="" /><label htmlFor="mission-body">상대에게 보낼 미션</label><textarea wrap="soft" spellCheck={false} className="mission-input" id="mission-body" value={mission} onChange={e => setMission(e.target.value)} placeholder="" /></section>
-      {footer('완료', () => setStep('home-mission'))}
+      {footer('완료', () => setStep('list-created'))}
     </>}
 
-    {(step === 'home-mission' || step === 'home-next' || step === 'home-done' || step === 'home-invite') && <>
-      <section className="demo-home-hero"><div className="demo-brand">RE Post</div><h1>오늘은 어떤 시절로 떠나볼까요?</h1><p>총 {step === 'home-mission' || step === 'home-next' ? 1 : 0}건의 미션이 남아있습니다.</p>
-        {step === 'home-mission' || step === 'home-next' ? <button className="mission-tile" onClick={() => setStep('reflection')}><span>엄마 ↝ 나</span><small>chapter. 04&nbsp; {title || '중학교 시절'}</small><strong>{mission || '이 노래 끝까지 듣고 한 줄 후기'}</strong><b>›</b></button> : <div className="empty-mission">지금은 기다리는 미션이 없어요.</div>}
-        {step === 'home-next' && <div className="chapter-carousel"><button disabled aria-label="이전 챕터">‹</button><span>{title || '중학교 시절'}</span><button aria-label="다음 챕터" onClick={() => setStep('postcards')}>›</button></div>}
+    {(step === 'list-created' || step === 'list-ready') && <>
+      <section className="demo-list-hero"><div className="demo-brand">RE Post</div><h1>엄마 <span>↝</span> 나</h1><p>현재 열람 가능한 엽서가 <b>3</b>개 있어요!</p><div className="hero-postcard"><img src={postcardArt} alt=""/><small>엽서를 눌러보세요!</small></div></section>
+      <section className="demo-list-body"><div className="section-heading"><h2>지금까지 나눈 엽서 <b>2</b>개</h2><button aria-label="챕터 추가" onClick={() => setStep('chapter')}>＋</button></div>
+        <div className="chapter-row"><span>01</span><div><strong>초등학생 시절</strong><small>열람 가능</small></div></div>
+        <div className="chapter-row"><span>02</span><div><strong>{title || '중학교 시절'}</strong><small>{step === 'list-created' ? '엄마가 추가' : '열람 가능'}</small></div><button aria-label="중학교 시절 열기" onClick={() => setStep(step === 'list-created' ? 'reflection' : 'postcards')}>›</button></div>
       </section>
-      <section className="demo-bookshelf"><h2>내 엽서함</h2><div className="books-grid-demo">{['엄마','아빠','언니'].map((name, index) => <button className="book-demo" key={name} onClick={() => setStep('postcards')}><div className="paper-stack-demo" style={{ background: index === 1 ? '#fea9fe' : '#caf984' }} /><strong>{name} <i>↝</i> 나</strong></button>)}{step === 'home-done' && <button className="add-demo" onClick={() => setStep('relationship')}>＋</button>}</div>{step === 'home-invite' && <button className="home-invite-button" onClick={() => setStep('invite')}>초대 링크 만들기</button>}</section>
+    </>}
+
+    {step === 'home-done' && <>
+      <section className="demo-home-hero"><div className="demo-brand">RE Post</div><h1>오늘은 어떤 시절로 떠나볼까요?</h1><p>총 0건의 미션이 남아있습니다.</p><div className="empty-mission">지금은 기다리는 미션이 없어요.</div>
+      </section>
+      <section className="demo-bookshelf"><h2>내 엽서함</h2><div className="books-grid-demo">{['엄마','아빠','언니'].map((name, index) => <button className="book-demo" key={name} onClick={() => setStep('postcards')}><div className="paper-stack-demo" style={{ background: index === 1 ? '#fea9fe' : '#caf984' }} /><strong>{name} <i>↝</i> 나</strong></button>)}<button className="add-demo" onClick={() => setStep('relationship')}>＋</button></div></section>
     </>}
 
     {step === 'reflection' && <>
       {header('챕터 미션')}
       <section className="demo-form"><p className="chapter-kicker">chapter. 04</p><h1>{title || '중학교 시절 이야기'}</h1><p className="form-subtitle">엄마와 내가 모두 미션을 하면 중학교 시절 챕터가 열려요.</p><div className="demo-mission-prompt"><div className="demo-mission-heading"><img src={ribbonGreen} alt=""/><span>엄마의 미션</span></div><p>{mission || '이 노래 들어보고 감상 남겨줘'}</p></div><label htmlFor="reflection">나의 후기를 적어주세요.</label><textarea wrap="soft" spellCheck={false} id="reflection" value={reflection} onChange={e => setReflection(e.target.value)} placeholder="" /></section>
-      {footer('후기 남기기', () => setStep('home-next'))}
+      {footer('후기 남기기', () => setStep('list-ready'))}
     </>}
 
     {step === 'postcards' && <>
@@ -80,7 +84,7 @@ export function DemoVideoFlow() {
     {step === 'relationship' && <>
       {header('새 엽서 만들기')}
       <section className="demo-form relationship-form"><h1>초대할 가족이<br/>나의 누구인지 알려주세요.</h1><p className="form-subtitle">서로의 청춘을 엽서로 주고받아요</p><div className="relationship-grid">{family.map(member => <button key={member.name} className={relationship === member.name ? 'selected' : ''} onClick={() => setRelationship(member.name)}><div><img src={member.art} alt=""/></div><span>{member.name}</span></button>)}</div></section>
-      {footer('선택 완료', () => setStep('home-invite'), relationship !== '엄마')}
+      {footer('초대 링크 만들기', () => setStep('invite'), relationship !== '엄마')}
     </>}
 
     {step === 'invite' && <>
