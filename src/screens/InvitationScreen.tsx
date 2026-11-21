@@ -14,13 +14,13 @@ function CopyIcon() {
 
 interface InvitationScreenProps {
   relationship: Relationship
+  inviteUrl: string
   onBack: () => void
   onDone: () => void
 }
 
-export function InvitationScreen({ relationship, onBack, onDone }: InvitationScreenProps) {
+export function InvitationScreen({ relationship, inviteUrl, onBack, onDone }: InvitationScreenProps) {
   const [copyStatus, setCopyStatus] = useState<'idle' | 'success'>('idle')
-  const inviteUrl = 'https://(서비스 주소)/invite/a8k2x9'
 
   useEffect(() => {
     if (copyStatus === 'idle') return

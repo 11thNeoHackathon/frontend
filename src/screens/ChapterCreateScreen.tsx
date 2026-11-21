@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import mascotOutline from '../assets/chapter-list/mascot-outline.svg'
+import { familyApi } from '../api/family'
 import { PageHeader } from '../components/PageHeader'
 import { StatusBar } from '../components/StatusBar'
 
 export function ChapterCreateScreen() {
   const navigate = useNavigate()
-  const { bookId = 'mom-and-me' } = useParams()
+  const { bookId = '' } = useParams()
   const [title, setTitle] = useState('')
+  const [error, setError] = useState('')
+  const [submitting, setSubmitting] = useState(false)
   const normalizedTitle = title.trim()
 
   useEffect(() => {
@@ -31,7 +34,14 @@ export function ChapterCreateScreen() {
           <img src={mascotOutline} alt="" />
         </div>
         <div className="chapter-create-footer">
-          <button className="primary-button" type="button" disabled={!normalizedTitle} onClick={() => navigate(`/books/${bookId}`)}>챕터 만들기</button>
+          {error && <p role="alert">{error}</p>}
+          <button className="primary-button" type="button" disabled={!normalizedTitle || submitting} onClick={() => {
+            setSubmitting(true)
+            setError('')
+            void familyApi.createChapter(Number(bookId), normalizedTitle).then(() => navigate(`/books/${bookId}`)).catch((cause: unknown) => {
+              setError(cause instanceof Error ? cause.message : '챕터를 만들지 못했어요.')
+            }).finally(() => setSubmitting(false))
+          }}>{submitting ? '만드는 중…' : '챕터 만들기'}</button>
         </div>
         <div className="home-indicator" aria-hidden="true" />
       </main>

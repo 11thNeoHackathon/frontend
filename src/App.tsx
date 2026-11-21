@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { familyApi, type BookInvitation } from './api/family'
 import './App.css'
 import { ChapterReadingFlow } from './features/chapter-reading/ChapterReadingFlow'
 import { HomeScreen } from './screens/HomeScreen'
@@ -17,6 +18,9 @@ function App() {
   const [selectedRelationship, setSelectedRelationship] = useState<Relationship | null>(null)
   const [selectedMission, setSelectedMission] = useState<{ chapterId: number; counterpart: string } | null>(null)
   const [readingChapterId, setReadingChapterId] = useState<number | null>(null)
+  const [invitation, setInvitation] = useState<BookInvitation | null>(null)
+  const [inviteError, setInviteError] = useState('')
+  const [creatingInvite, setCreatingInvite] = useState(false)
 
   if (chapterId) {
     return <ChapterReadingFlow chapterId={chapterId} onBack={() => window.history.back()} />
@@ -48,7 +52,7 @@ function App() {
     <div className="app-shell">
       {screen === 'home' && (
         <HomeScreen
-          onAddBook={() => setScreen('relationship')}
+          onAddBook={() => { setInviteError(''); setScreen('relationship') }}
           onOpenBook={(bookId) => navigate(`/books/${bookId}`)}
           onSelectMission={(chapterId, counterpart) => setSelectedMission({ chapterId, counterpart })}
         />
@@ -60,9 +64,18 @@ function App() {
           onSelectRelationship={setSelectedRelationship}
           onAddRelationship={() => setScreen('relationshipInput')}
           onContinue={(nextRelationship) => {
-            setRelationship(nextRelationship)
-            setScreen('invitation')
+            setCreatingInvite(true)
+            setInviteError('')
+            void familyApi.createBook(nextRelationship).then((created) => {
+              setRelationship(nextRelationship)
+              setInvitation(created)
+              setScreen('invitation')
+            }).catch((cause: unknown) => {
+              setInviteError(cause instanceof Error ? cause.message : '초대 링크를 만들지 못했어요.')
+            }).finally(() => setCreatingInvite(false))
           }}
+          error={inviteError}
+          submitting={creatingInvite}
         />
       )}
       {screen === 'relationshipInput' && (
@@ -77,6 +90,7 @@ function App() {
       {screen === 'invitation' && (
         <InvitationScreen
           relationship={relationship}
+          inviteUrl={invitation?.invitation.inviteUrl ?? ''}
           onBack={() => setScreen('relationship')}
           onDone={() => {
             setSelectedRelationship(null)

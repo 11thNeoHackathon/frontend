@@ -23,6 +23,8 @@ interface RelationshipScreenProps {
   onAddRelationship: () => void
   selectedRelationship: Relationship | null
   onSelectRelationship: (relationship: Relationship) => void
+  error?: string
+  submitting?: boolean
 }
 
 export function RelationshipScreen({
@@ -31,6 +33,8 @@ export function RelationshipScreen({
   onAddRelationship,
   selectedRelationship,
   onSelectRelationship,
+  error,
+  submitting,
 }: RelationshipScreenProps) {
   const visibleRelationships = selectedRelationship
     ? [selectedRelationship, ...relationships.filter((relationship) => relationship !== selectedRelationship)]
@@ -58,7 +62,7 @@ export function RelationshipScreen({
           ))}
         </div>
       </section>
-      {selectedRelationship && <div className="relation-footer"><button className="primary-button" type="button" onClick={() => onContinue(selectedRelationship)}>초대 링크 만들기</button></div>}
+      {selectedRelationship && <div className="relation-footer">{error && <p role="alert">{error}</p>}<button className="primary-button" type="button" disabled={submitting} onClick={() => onContinue(selectedRelationship)}>{submitting ? '만드는 중…' : '초대 링크 만들기'}</button></div>}
       <div className="home-indicator" aria-hidden="true" />
     </main>
   )

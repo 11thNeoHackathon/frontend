@@ -20,6 +20,8 @@ export type Chapter = {
   id: number
   bookId: number
   name: string
+  myStory: { id: number; authorId: number; title: string; content: string; missionInstruction: string; completedAt: string | null; updatedAt: string | null } | null
+  counterpartStory: { id: number; authorId: number; title: string; content: string; missionInstruction: string; completedAt: string | null; updatedAt: string | null } | null
   nextAction: 'WRITE_STORY' | 'WAIT' | 'DO_MISSION' | 'WAIT_FOR_OPEN' | 'READ'
   progress: Progress[]
   receivedMission: string | null

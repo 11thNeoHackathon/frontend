@@ -1,13 +1,8 @@
-import type { CSSProperties } from 'react'
+import { useEffect, useState, type CSSProperties } from 'react'
+import { familyApi, type Book } from '../api/family'
 import { StatusBar } from '../components/StatusBar'
 import { HomeMissions } from '../features/missions/HomeMissions'
 import logo from '../features/missions/assets/re-post.svg'
-
-const books = [
-  { id: 'mom-and-me', relationship: '엄마', tone: 'green', angle: -14 },
-  { id: 'dad-and-me', relationship: '아빠', tone: 'pink', angle: -14 },
-  { id: 'sister-and-me', relationship: '언니', tone: 'pending', angle: -9 },
-] as const
 
 function BellIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 20h4" /></svg>
@@ -48,6 +43,21 @@ interface HomeScreenProps {
 }
 
 export function HomeScreen({ onAddBook, onOpenBook, onSelectMission }: HomeScreenProps) {
+  const [books, setBooks] = useState<Book[]>([])
+  const [bookError, setBookError] = useState('')
+  const [loadingBooks, setLoadingBooks] = useState(true)
+  const [reloadKey, setReloadKey] = useState(0)
+
+  useEffect(() => {
+    let active = true
+    void familyApi.getBooks().then((data) => {
+      if (active) setBooks(data)
+    }).catch((cause: unknown) => {
+      if (active) setBookError(cause instanceof Error ? cause.message : '엽서함을 불러오지 못했어요.')
+    }).finally(() => { if (active) setLoadingBooks(false) })
+    return () => { active = false }
+  }, [reloadKey])
+
   return (
     <main className="screen home-screen">
       <section className="home-hero">
@@ -63,8 +73,10 @@ export function HomeScreen({ onAddBook, onOpenBook, onSelectMission }: HomeScree
       </section>
       <section className="bookshelf-section">
         <h2>내 엽서함</h2>
+        {loadingBooks && <p role="status">엽서함을 불러오는 중이에요…</p>}
+        {bookError && <p role="alert">{bookError} <button type="button" onClick={() => { setBookError(''); setLoadingBooks(true); setReloadKey((key) => key + 1) }}>다시 시도</button></p>}
         <div className="books-grid">
-          {books.map((book) => <BookCard key={book.id} {...book} onClick={() => onOpenBook(book.id)} />)}
+          {books.map((book) => <BookCard key={book.bookId} relationship={book.counterpartLabel} tone={book.status === 'INVITE_PENDING' ? 'pending' : book.counterpartLabel.includes('아빠') ? 'pink' : 'green'} angle={-14} onClick={() => onOpenBook(String(book.bookId))} />)}
           <button className="add-book-card" type="button" onClick={onAddBook} aria-label="새 책 만들기"><span>＋</span></button>
         </div>
       </section>
