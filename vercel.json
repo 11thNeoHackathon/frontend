@@ -15,13 +15,22 @@
         {
           "type": "request.headers",
           "op": "delete",
-          "target": { "key": "origin" }
+          "target": {
+            "key": "origin"
+          }
         }
       ]
     },
     {
       "src": "/api/v1/(.*)",
       "dest": "https://3.104.111.132/api/v1/$1"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
