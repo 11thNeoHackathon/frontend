@@ -39,7 +39,10 @@ function App() {
         <InvitationScreen
           relationship={relationship}
           onBack={() => setScreen('relationship')}
-          onDone={() => setScreen('home')}
+          onDone={() => {
+            setSelectedRelationship(null)
+            setScreen('home')
+          }}
         />
       )}
     </div>

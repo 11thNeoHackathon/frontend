@@ -421,6 +421,10 @@ button { font: inherit; }
   margin-top: 24px;
 }
 
+.relation-content.has-selection {
+  padding-bottom: 128px;
+}
+
 .relationship-card {
   position: relative;
   height: 124.5px;
@@ -515,6 +519,7 @@ button { font: inherit; }
 .relationship-suggestions div {
   margin-top: 8px;
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
 }
 
@@ -672,6 +677,11 @@ button { font: inherit; }
   font-size: 14px;
   transform: translateX(-50%);
   animation: toast-in .18s ease-out;
+}
+
+.copy-toast-error {
+  color: var(--color-white);
+  background: var(--color-gray-20);
 }
 
 @keyframes toast-in {

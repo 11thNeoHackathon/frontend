@@ -19,22 +19,22 @@ interface InvitationScreenProps {
 }
 
 export function InvitationScreen({ relationship, onBack, onDone }: InvitationScreenProps) {
-  const [copied, setCopied] = useState(false)
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const inviteUrl = 'https://(서비스 주소)/invite/a8k2x9'
 
   useEffect(() => {
-    if (!copied) return
-    const timer = window.setTimeout(() => setCopied(false), 3000)
+    if (copyStatus === 'idle') return
+    const timer = window.setTimeout(() => setCopyStatus('idle'), 3000)
     return () => window.clearTimeout(timer)
-  }, [copied])
+  }, [copyStatus])
 
   const copyInvite = async () => {
     try {
       await navigator.clipboard.writeText(inviteUrl)
+      setCopyStatus('success')
     } catch {
-      // WebView나 권한이 없는 환경에서도 디자인 상태는 확인할 수 있다.
+      setCopyStatus('error')
     }
-    setCopied(true)
   }
 
   return (
@@ -57,7 +57,12 @@ export function InvitationScreen({ relationship, onBack, onDone }: InvitationScr
           </ol>
         </div>
       </section>
-      {copied && <div className="copy-toast" role="status"><CopyIcon /><span>복사가 완료되었어요.</span></div>}
+      {copyStatus !== 'idle' && (
+        <div className={`copy-toast ${copyStatus === 'error' ? 'copy-toast-error' : ''}`} role="status">
+          <CopyIcon />
+          <span>{copyStatus === 'success' ? '복사가 완료되었어요.' : '링크를 복사하지 못했어요.'}</span>
+        </div>
+      )}
       <div className="fixed-footer"><button className="primary-button" type="button" onClick={onDone}>완료</button></div>
       <div className="home-indicator" aria-hidden="true" />
     </main>
