@@ -1,5 +1,4 @@
 import type { CSSProperties } from 'react'
-import type { BookListItem } from '../api/books'
 import { StatusBar } from '../components/StatusBar'
 
 const missions = [
@@ -7,10 +6,10 @@ const missions = [
   { relationship: '아빠 X 나', chapter: 'chp2. 초등학교 시절', title: '요즘 하는 게임 10분 해보기', tone: 'pink' },
 ] as const
 
-const bookStyles = [
-  { tone: 'green', angle: -14 },
-  { tone: 'pink', angle: -14 },
-  { tone: 'pending', angle: -9 },
+const books = [
+  { id: 'mom', relationship: '엄마', tone: 'green', angle: -14 },
+  { id: 'dad', relationship: '아빠', tone: 'pink', angle: -14 },
+  { id: 'sister', relationship: '언니', tone: 'pending', angle: -9 },
 ] as const
 
 function BellIcon() {
@@ -41,15 +40,11 @@ function BookCard({ relationship, tone, angle, onClick }: { relationship: string
 }
 
 interface HomeScreenProps {
-  books: BookListItem[]
-  isLoading: boolean
-  error: string | null
-  onRetry: () => void
   onAddBook: () => void
-  onOpenBook: (book: BookListItem) => void
+  onOpenBook: (bookId: string) => void
 }
 
-export function HomeScreen({ books, isLoading, error, onRetry, onAddBook, onOpenBook }: HomeScreenProps) {
+export function HomeScreen({ onAddBook, onOpenBook }: HomeScreenProps) {
   return (
     <main className="screen home-screen">
       <section className="home-hero">
@@ -74,22 +69,8 @@ export function HomeScreen({ books, isLoading, error, onRetry, onAddBook, onOpen
       </section>
       <section className="bookshelf-section">
         <h2>내 책장</h2>
-        {isLoading && <p className="data-state" role="status">책장을 불러오는 중이에요.</p>}
-        {error && (
-          <div className="data-state data-state-error" role="alert">
-            <p>{error}</p>
-            <button type="button" onClick={onRetry}>다시 시도</button>
-          </div>
-        )}
         <div className="books-grid">
-          {!isLoading && !error && books.map((book, index) => (
-            <BookCard
-              key={book.id}
-              relationship={book.relationship}
-              {...bookStyles[index % bookStyles.length]}
-              onClick={() => onOpenBook(book)}
-            />
-          ))}
+          {books.map((book) => <BookCard key={book.id} {...book} onClick={() => onOpenBook(book.id)} />)}
           <button className="add-book-card" type="button" onClick={onAddBook} aria-label="새 책 만들기"><span>＋</span></button>
         </div>
       </section>

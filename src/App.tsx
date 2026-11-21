@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import './App.css'
-import type { BookListItem } from './api/books'
 import { HomeScreen } from './screens/HomeScreen'
 import { InvitationScreen } from './screens/InvitationScreen'
 import { RelationshipInputScreen } from './screens/RelationshipInputScreen'
@@ -8,30 +7,17 @@ import { RelationshipScreen } from './screens/RelationshipScreen'
 import type { Relationship, Screen } from './types/invite'
 
 interface AppProps {
-  books: BookListItem[]
-  isBooksLoading: boolean
-  booksError: string | null
-  onRetryBooks: () => void
-  onOpenBook: (book: BookListItem) => void
+  onOpenBook: (bookId: string) => void
 }
 
-function App({ books, isBooksLoading, booksError, onRetryBooks, onOpenBook }: AppProps) {
+function App({ onOpenBook }: AppProps) {
   const [screen, setScreen] = useState<Screen>('home')
   const [relationship, setRelationship] = useState<Relationship>('엄마')
   const [selectedRelationship, setSelectedRelationship] = useState<Relationship | null>(null)
 
   return (
     <div className="app-shell">
-      {screen === 'home' && (
-        <HomeScreen
-          books={books}
-          isLoading={isBooksLoading}
-          error={booksError}
-          onRetry={onRetryBooks}
-          onAddBook={() => setScreen('relationship')}
-          onOpenBook={onOpenBook}
-        />
-      )}
+      {screen === 'home' && <HomeScreen onAddBook={() => setScreen('relationship')} onOpenBook={onOpenBook} />}
       {screen === 'relationship' && (
         <RelationshipScreen
           onBack={() => setScreen('home')}

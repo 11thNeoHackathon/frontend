@@ -20,14 +20,6 @@
 - 초대 화면에서 완료한 뒤 새 책 만들기를 다시 시작하면 이전 관계가 선택되지 않은 초기 상태로 표시된다.
 - 홈의 내 보관함에서 책을 누른다 → 엽서 목록의 추가 버튼을 누른다 → 챕터 이름을 입력해 새 엽서를 목록에 추가한다.
 
-## API 연결
-
-백엔드 주소는 `VITE_API_BASE_URL` 환경 변수로 설정합니다. `.env.example`을 참고해 `.env.local`을 만들 수 있습니다. 로컬에서는 `VITE_API_BASE_URL=/backend`와 `VITE_PROXY_TARGET`을 사용하면 Vite 개발 서버가 API 요청을 대신 전달해 CORS 충돌을 피합니다. 배포 환경에서는 공개 API 주소를 직접 지정하거나 같은 도메인의 리버스 프록시를 설정해야 합니다.
-
-- `GET /api/v1/books`: 홈 책장 목록
-- `GET /api/v1/books/{bookId}/chapters`: 엽서 목록
-- `POST /api/v1/books/{bookId}/chapters`: 챕터 생성 (`{ "name": string }`)
-
 ## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
