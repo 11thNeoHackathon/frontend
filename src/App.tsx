@@ -6,14 +6,18 @@ import { RelationshipInputScreen } from './screens/RelationshipInputScreen'
 import { RelationshipScreen } from './screens/RelationshipScreen'
 import type { Relationship, Screen } from './types/invite'
 
-function App() {
+interface AppProps {
+  onOpenBook: (bookId: string) => void
+}
+
+function App({ onOpenBook }: AppProps) {
   const [screen, setScreen] = useState<Screen>('home')
   const [relationship, setRelationship] = useState<Relationship>('엄마')
   const [selectedRelationship, setSelectedRelationship] = useState<Relationship | null>(null)
 
   return (
     <div className="app-shell">
-      {screen === 'home' && <HomeScreen onAddBook={() => setScreen('relationship')} />}
+      {screen === 'home' && <HomeScreen onAddBook={() => setScreen('relationship')} onOpenBook={onOpenBook} />}
       {screen === 'relationship' && (
         <RelationshipScreen
           onBack={() => setScreen('home')}

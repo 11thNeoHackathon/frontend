@@ -7,9 +7,9 @@ const missions = [
 ] as const
 
 const books = [
-  { relationship: '엄마', tone: 'green', angle: -14 },
-  { relationship: '아빠', tone: 'pink', angle: -14 },
-  { relationship: '언니', tone: 'pending', angle: -9 },
+  { id: 'mom', relationship: '엄마', tone: 'green', angle: -14 },
+  { id: 'dad', relationship: '아빠', tone: 'pink', angle: -14 },
+  { id: 'sister', relationship: '언니', tone: 'pending', angle: -9 },
 ] as const
 
 function BellIcon() {
@@ -26,9 +26,9 @@ function PaperStack({ tone, angle = -12 }: { tone: string; angle?: number }) {
   )
 }
 
-function BookCard({ relationship, tone, angle }: { relationship: string; tone: string; angle: number }) {
+function BookCard({ relationship, tone, angle, onClick }: { relationship: string; tone: string; angle: number; onClick: () => void }) {
   return (
-    <button className="book-card" type="button" aria-label={`${relationship}와 나의 책`}>
+    <button className="book-card" type="button" onClick={onClick} aria-label={`${relationship}와 나의 책`}>
       <PaperStack tone={tone} angle={angle} />
       <span className="book-cover">
         <i className="pin top-left" /><i className="pin top-right" />
@@ -39,7 +39,12 @@ function BookCard({ relationship, tone, angle }: { relationship: string; tone: s
   )
 }
 
-export function HomeScreen({ onAddBook }: { onAddBook: () => void }) {
+interface HomeScreenProps {
+  onAddBook: () => void
+  onOpenBook: (bookId: string) => void
+}
+
+export function HomeScreen({ onAddBook, onOpenBook }: HomeScreenProps) {
   return (
     <main className="screen home-screen">
       <section className="home-hero">
@@ -65,7 +70,7 @@ export function HomeScreen({ onAddBook }: { onAddBook: () => void }) {
       <section className="bookshelf-section">
         <h2>내 책장</h2>
         <div className="books-grid">
-          {books.map((book) => <BookCard key={book.relationship} {...book} />)}
+          {books.map((book) => <BookCard key={book.id} {...book} onClick={() => onOpenBook(book.id)} />)}
           <button className="add-book-card" type="button" onClick={onAddBook} aria-label="새 책 만들기"><span>＋</span></button>
         </div>
       </section>
