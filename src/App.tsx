@@ -181,18 +181,42 @@ function RelationshipScreen({
   onAddRelationship: () => void
 }) {
   const [selected, setSelected] = useState<Relationship | null>(null)
+  const visibleRelationships = selected
+    ? [selected, ...relationships.filter((relationship) => relationship !== selected)]
+    : relationships.slice(0, 4)
 
   return (
     <main className="screen flow-screen">
       <StatusBar />
       <Header title="새 책 만들기" onBack={onBack} />
 
-      <section className="flow-content relation-content">
-        <h1>초대할 가족이 나의 누구인지 알려주세요.</h1>
+      <section className={`flow-content relation-content ${selected ? 'has-selection' : ''}`}>
+        <h1>
+          <span>초대할 가족이</span>
+          <span>나의 누구인지 알려주세요.</span>
+        </h1>
         <p className="description">서로의 청춘을 한 권으로 만들어드릴게요</p>
 
+        {selected && (
+          <div className="relation-note">
+            <strong>링크를 보내면 상대가 수락했을 때 책이 만들어져요.</strong>
+            <span>수락하기 전까지는 책장에 &quot;초대 대기&quot;로 보여요.</span>
+          </div>
+        )}
+
         <div className="relationship-grid">
-          {relationships.map((relationship) => (
+          {selected && (
+            <button
+              className="relationship-card custom-relation"
+              type="button"
+              onClick={onAddRelationship}
+              aria-label="다른 가족 관계 추가"
+            >
+              <span className="relation-paper" aria-hidden="true" />
+              <strong>＋</strong>
+            </button>
+          )}
+          {visibleRelationships.map((relationship) => (
             <RelationshipCard
               relationship={relationship}
               isSelected={selected === relationship}
@@ -200,24 +224,11 @@ function RelationshipScreen({
               key={relationship}
             />
           ))}
-          <button
-            className="relationship-card custom-relation"
-            type="button"
-            onClick={onAddRelationship}
-            aria-label="다른 가족 관계 추가"
-          >
-            <span className="relation-paper" aria-hidden="true" />
-            <strong>＋</strong>
-          </button>
         </div>
       </section>
 
       {selected && (
         <div className="relation-footer">
-          <div className="relation-note">
-            <strong>링크를 보내면 상대가 수락했을 때 책이 만들어져요.</strong>
-            <span>수락하기 전까지는 책장에 &quot;초대 대기&quot;로 보여요.</span>
-          </div>
           <button className="primary-button" type="button" onClick={() => onContinue(selected)}>
             초대 링크 만들기
           </button>
