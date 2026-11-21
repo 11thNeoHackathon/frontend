@@ -1,0 +1,42 @@
+:root {
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  --color-gray-5: #373738;
+  --color-gray-10: #444445;
+  --color-gray-20: #5b5b5c;
+  --color-gray-30: #828282;
+  --color-gray-40: #989899;
+  --color-gray-50: #bebec1;
+  --color-gray-60: #d9dadd;
+  --color-gray-70: #e9eaed;
+  --color-gray-80: #f2f3f6;
+  --color-gray-90: #f9f9fb;
+
+  --color-main-5: #043648;
+  --color-main-10: #185469;
+  --color-main-20: #337c95;
+  --color-main-30: #0b95c5;
+  --color-main-40: #46bce6;
+  --color-main-50: #73dbff;
+  --color-main-60: #8fe2ff;
+  --color-main-70: #aae9ff;
+  --color-main-80: #c4effe;
+  --color-main-90: #ddf6fe;
+
+  --color-pink-5: #ffecff;
+  --color-pink-10: #fea9fe;
+  --color-pink-20: #b40cb4;
+  --color-green-5: #efffd7;
+  --color-green-10: #caf984;
+  --color-green-20: #4d7214;
+  --color-purple-5: #dde1ff;
+  --color-purple-10: #a9b2fe;
+  --color-purple-20: #3b46b0;
+
+  --font-family-suit: 'SUIT Variable', SUIT, sans-serif;
+  --letter-spacing-default: -0.02em;
+  --line-height-heading: 1.4;
+  --line-height-body: 1.6;
+  --line-height-caption: 1.4;
+}
