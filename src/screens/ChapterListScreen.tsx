@@ -10,6 +10,7 @@ import { PageHeader } from '../components/PageHeader'
 import { StatusBar } from '../components/StatusBar'
 import type { Book } from '../features/missions/api'
 import deleteActiveIcon from '../assets/chapter/delete-active.svg'
+import deleteMutedIcon from '../assets/chapter/delete-muted.svg'
 import type { ChapterListItem } from '../types/chapter'
 
 interface ChapterListScreenProps {
