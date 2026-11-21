@@ -77,7 +77,7 @@ function App({ onOpenBook }: AppProps) {
           busy={creatingBook}
           onContinue={async(nextRelationship) => {
             setCreatingBook(true); setFlowError('');
-            try { const created=await missionApi.createBook(nextRelationship); setRelationship(nextRelationship); setInviteUrl(created.invitation.inviteUrl); setScreen('invitation') }
+            try { const created=await missionApi.createBook(nextRelationship); setRelationship(nextRelationship); setInviteUrl(`${window.location.origin}/invite/${created.invitation.code}`); setScreen('invitation') }
             catch(e){setFlowError(e instanceof ApiError?e.message:'초대 링크를 만들지 못했어요.')}
             finally{setCreatingBook(false)}
           }}
