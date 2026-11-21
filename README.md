@@ -22,7 +22,7 @@
 
 ## API 연결
 
-백엔드 주소는 `VITE_API_BASE_URL` 환경 변수로 설정합니다. 로컬 기본값은 `http://localhost:8080`이며, `.env.example`을 참고해 `.env.local`을 만들 수 있습니다.
+백엔드 주소는 `VITE_API_BASE_URL` 환경 변수로 설정합니다. `.env.example`을 참고해 `.env.local`을 만들 수 있습니다. 로컬에서는 `VITE_API_BASE_URL=/backend`와 `VITE_PROXY_TARGET`을 사용하면 Vite 개발 서버가 API 요청을 대신 전달해 CORS 충돌을 피합니다. 배포 환경에서는 공개 API 주소를 직접 지정하거나 같은 도메인의 리버스 프록시를 설정해야 합니다.
 
 - `GET /api/v1/books`: 홈 책장 목록
 - `GET /api/v1/books/{bookId}/chapters`: 엽서 목록
