@@ -28,6 +28,7 @@ export type Chapter = {
 }
 export type Book = { bookId:number; title:string; status?:string; mySlotNo?:number; counterpartLabel?:string|null; counterpartName?:string|null }
 export type CreatedBook = { book:Book; invitation:{code:string; inviteUrl:string; expiresAt:string} }
+export type InvitationPreview = { status:'AVAILABLE'|'LINKED'; inviterName:string; bookTitle:string; expiresAt:string; bookId:number|null }
 export type Participant = { participantId:number; displayName:string; birthYear:number|null }
 export type ChapterDetails = Chapter & { openedAt:string|null; myStory:{title:string;content:string;missionInstruction:string}|null; counterpartStory:{title:string;content:string;missionInstruction:string}|null }
 
@@ -76,6 +77,9 @@ export const missionApi = {
     return participantRegistration
   },
   getParticipant: () => request<Participant>('/api/v1/participants/me'),
+  getInvitation: (code:string) => request<InvitationPreview>(`/api/v1/invitations/${encodeURIComponent(code)}`),
+  acceptInvitation: (code:string,input:{displayName?:string;counterpartLabel?:string}) =>
+    request<Book>(`/api/v1/invitations/${encodeURIComponent(code)}/accept`,{method:'POST',body:JSON.stringify(input)}),
   createChapter: (bookId:number,name:string) => request<Chapter>(`/api/v1/books/${bookId}/chapters`,{method:'POST',body:JSON.stringify({name})}),
   deleteChapter: (chapterId:number) => request<void>(`/api/v1/chapters/${chapterId}`,{method:'DELETE'}),
   getChapters: (bookId: number) => request<Chapter[]>(`/api/v1/books/${bookId}/chapters`),
