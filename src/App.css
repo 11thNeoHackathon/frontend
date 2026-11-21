@@ -381,12 +381,14 @@ button { font: inherit; }
 .flow-content { padding: 0 24px; }
 
 .relation-content,
-.invitation-content {
+.invitation-content,
+.relationship-input-content {
   padding-top: 4px;
 }
 
 .relation-content h1,
-.invitation-content h1 {
+.invitation-content h1,
+.relationship-input-content h1 {
   width: 308px;
   font-size: 24px;
   line-height: 1.4;
@@ -469,6 +471,71 @@ button { font: inherit; }
   background: #fff;
 }
 .custom-relation strong { color: var(--color-gray-30); font-size: 28px; font-weight: 300; }
+
+.relationship-input-content h1 { margin: 0; }
+
+.relationship-field {
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--color-gray-30);
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.relationship-input-wrap {
+  height: 48px;
+  padding: 0 12px;
+  border: 1px solid var(--color-main-50);
+  display: flex;
+  align-items: center;
+  background: var(--color-white);
+}
+
+.relationship-input-wrap input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  color: var(--color-gray-5);
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+}
+
+.relationship-input-wrap small { color: var(--color-gray-30); }
+
+.relationship-suggestions {
+  margin-top: 24px;
+  color: var(--color-gray-30);
+  font-size: 12px;
+}
+
+.relationship-suggestions div {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+}
+
+.relationship-suggestions button {
+  min-width: 48px;
+  height: 32px;
+  padding: 0 12px;
+  border: 0;
+  color: var(--color-gray-20);
+  background: var(--color-gray-80);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.input-note { margin-top: 28px; }
+
+.primary-button:disabled {
+  color: var(--color-gray-40);
+  background: var(--color-gray-70);
+  cursor: default;
+}
 
 .relation-footer,
 .fixed-footer {

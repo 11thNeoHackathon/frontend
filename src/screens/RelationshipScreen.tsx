@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { PageHeader } from '../components/PageHeader'
 import { StatusBar } from '../components/StatusBar'
 import type { Relationship } from '../types/invite'
@@ -22,39 +21,44 @@ interface RelationshipScreenProps {
   onBack: () => void
   onContinue: (relationship: Relationship) => void
   onAddRelationship: () => void
+  selectedRelationship: Relationship | null
+  onSelectRelationship: (relationship: Relationship) => void
 }
 
-export function RelationshipScreen({ onBack, onContinue, onAddRelationship }: RelationshipScreenProps) {
-  const [selected, setSelected] = useState<Relationship | null>(null)
-  const visibleRelationships = selected
-    ? [selected, ...relationships.filter((relationship) => relationship !== selected)]
-    : relationships.slice(0, 4)
+export function RelationshipScreen({
+  onBack,
+  onContinue,
+  onAddRelationship,
+  selectedRelationship,
+  onSelectRelationship,
+}: RelationshipScreenProps) {
+  const visibleRelationships = selectedRelationship
+    ? [selectedRelationship, ...relationships.filter((relationship) => relationship !== selectedRelationship)]
+    : relationships
 
   return (
     <main className="screen flow-screen">
       <StatusBar />
       <PageHeader title="새 책 만들기" onBack={onBack} />
-      <section className={`flow-content relation-content ${selected ? 'has-selection' : ''}`}>
+      <section className={`flow-content relation-content ${selectedRelationship ? 'has-selection' : ''}`}>
         <h1><span>초대할 가족이</span><span>나의 누구인지 알려주세요.</span></h1>
         <p className="description">서로의 청춘을 한 권으로 만들어드릴게요</p>
-        {selected && (
+        {selectedRelationship && (
           <div className="relation-note">
             <strong>링크를 보내면 상대가 수락했을 때 책이 만들어져요.</strong>
             <span>수락하기 전까지는 책장에 &quot;초대 대기&quot;로 보여요.</span>
           </div>
         )}
         <div className="relationship-grid">
-          {selected && (
-            <button className="relationship-card custom-relation" type="button" onClick={onAddRelationship} aria-label="다른 가족 관계 추가">
-              <span className="relation-paper" aria-hidden="true" /><strong>＋</strong>
-            </button>
-          )}
+          <button className="relationship-card custom-relation" type="button" onClick={onAddRelationship} aria-label="다른 가족 관계 추가">
+            <span className="relation-paper" aria-hidden="true" /><strong>＋</strong>
+          </button>
           {visibleRelationships.map((relationship) => (
-            <RelationshipCard relationship={relationship} isSelected={selected === relationship} onSelect={() => setSelected(relationship)} key={relationship} />
+            <RelationshipCard relationship={relationship} isSelected={selectedRelationship === relationship} onSelect={() => onSelectRelationship(relationship)} key={relationship} />
           ))}
         </div>
       </section>
-      {selected && <div className="relation-footer"><button className="primary-button" type="button" onClick={() => onContinue(selected)}>초대 링크 만들기</button></div>}
+      {selectedRelationship && <div className="relation-footer"><button className="primary-button" type="button" onClick={() => onContinue(selectedRelationship)}>초대 링크 만들기</button></div>}
       <div className="home-indicator" aria-hidden="true" />
     </main>
   )
