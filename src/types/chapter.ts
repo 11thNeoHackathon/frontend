@@ -1,5 +1,7 @@
 export interface ChapterListItem {
-  id: string
+  id: number
+  bookId: number
   title: string
-  tags: Array<{ label: string; tone: 'green' | 'pink' | 'purple' }>
+  nextAction?: string
+  openedAt?: string
 }

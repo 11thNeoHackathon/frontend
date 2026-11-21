@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom'
 import deleteActiveIcon from '../assets/chapter/delete-active.svg'
 import deleteMutedIcon from '../assets/chapter/delete-muted.svg'
 import plusIcon from '../assets/chapter/plus.svg'
@@ -9,21 +8,23 @@ import { StatusBar } from '../components/StatusBar'
 import type { ChapterListItem } from '../types/chapter'
 
 interface ChapterListScreenProps {
+  relationship: string
   chapters: ChapterListItem[]
+  isLoading: boolean
+  error: string | null
+  onRetry: () => void
   onBack: () => void
-  onAddChapter: (bookId: string) => void
+  onAddChapter: () => void
 }
 
-export function ChapterListScreen({ chapters, onBack, onAddChapter }: ChapterListScreenProps) {
-  const { bookId = 'mom' } = useParams()
-
+export function ChapterListScreen({ relationship, chapters, isLoading, error, onRetry, onBack, onAddChapter }: ChapterListScreenProps) {
   return (
     <main className="screen chapter-list-screen">
       <section className="chapter-book-hero">
         <StatusBar />
         <PageHeader title="" onBack={onBack} />
         <div className="chapter-book-visual">
-          <h1>엄마 <i aria-hidden="true" /> 나</h1>
+          <h1>{relationship} <i aria-hidden="true" /> 나</h1>
           <div className="chapter-paper-stack" aria-hidden="true"><span /><span /></div>
         </div>
       </section>
@@ -31,12 +32,20 @@ export function ChapterListScreen({ chapters, onBack, onAddChapter }: ChapterLis
       <section className="chapter-list-content">
         <header>
           <h2>지금까지 나눈 엽서 <strong>{chapters.length}</strong>개</h2>
-          <button type="button" onClick={() => onAddChapter(bookId)} aria-label="새 챕터 만들기">
+          <button type="button" onClick={onAddChapter} aria-label="새 챕터 만들기" disabled={isLoading || Boolean(error)}>
             <img src={plusIcon} alt="" />
           </button>
         </header>
 
-        <ol className="chapter-cards">
+        {isLoading && <p className="data-state" role="status">엽서를 불러오는 중이에요.</p>}
+        {error && (
+          <div className="data-state data-state-error" role="alert">
+            <p>{error}</p>
+            <button type="button" onClick={onRetry}>다시 시도</button>
+          </div>
+        )}
+        {!isLoading && !error && chapters.length === 0 && <p className="data-state">아직 만든 엽서가 없어요.</p>}
+        {!isLoading && !error && <ol className="chapter-cards">
           {chapters.map((chapter, index) => (
             <li key={chapter.id}>
               <div className="chapter-number">{String(index + 1).padStart(2, '0')}</div>
@@ -44,9 +53,7 @@ export function ChapterListScreen({ chapters, onBack, onAddChapter }: ChapterLis
               <article>
                 <div>
                   <h3>{chapter.title}</h3>
-                  <div className="chapter-tags">
-                    {chapter.tags.map((tag) => <span className={tag.tone} key={tag.label}>{tag.label}</span>)}
-                  </div>
+                  {chapter.nextAction && <div className="chapter-tags"><span className="purple">{chapter.nextAction}</span></div>}
                 </div>
                 <button type="button" aria-label={`${chapter.title} 삭제`}>
                   <img src={index === 0 ? deleteActiveIcon : deleteMutedIcon} alt="" />
@@ -54,7 +61,7 @@ export function ChapterListScreen({ chapters, onBack, onAddChapter }: ChapterLis
               </article>
             </li>
           ))}
-        </ol>
+        </ol>}
       </section>
       <div className="home-indicator" aria-hidden="true" />
     </main>
