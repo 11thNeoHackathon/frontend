@@ -34,9 +34,14 @@ export type Book = {
 }
 
 export class ApiError extends Error {
-  constructor(message: string, readonly status: number, readonly code?: string) {
+  readonly status: number
+  readonly code?: string
+
+  constructor(message: string, status: number, code?: string) {
     super(message)
     this.name = 'ApiError'
+    this.status = status
+    this.code = code
   }
 }
 
