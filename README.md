@@ -12,6 +12,18 @@
 
 엄마가 보낸 미션은 자녀가 열어보거나 ‘나중에 하기’를 눌러도 수행 대기로 표시합니다. 자녀가 감상을 제출한 뒤 엄마가 홈을 다시 열면 수행 완료가 표시되고, 항목을 누르면 그 감상이 열립니다. 아빠의 To-do에는 이 미션이 보이지 않아야 합니다. [공통 시연 시나리오 3~5단계](https://github.com/11thNeoHackathon/backend/blob/main/docs/%EC%8B%9C%EC%97%B0%20%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.md)
 
+## 배포 API와 세션 쿠키
+
+Vercel의 `vercel.json`은 프론트 주소에서 시작한 `/api/v1/*` 요청을 EC2의 HTTPS API로 전달합니다. 배포용 API 호출에는 `/api/v1/...` 상대 경로와 `credentials: 'include'`를 사용합니다.
+
+```ts
+const response = await fetch('/api/v1/participants/me', {
+  credentials: 'include',
+})
+```
+
+프론트가 새 빌드에 배포된 상황 → 같은 프론트 주소에서 참여자 생성 또는 초대 수락 후 다시 참여자 정보를 조회한다 → 브라우저가 `participant_session` 쿠키를 저장하고 다음 `/api/v1/participants/me` 요청에 보내 `200`을 받는다. 새 브라우저에서 세션 없이 조회하면 `401 SESSION_REQUIRED`가 반환된다.
+
 ## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
