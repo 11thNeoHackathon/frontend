@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import App from '../App'
 import { ChapterCreateScreen } from '../screens/ChapterCreateScreen'
 import { ChapterListScreen } from '../screens/ChapterListScreen'
+import { ParticipantGate } from '../features/onboarding/ParticipantGate'
 import type { ChapterListItem } from '../types/chapter'
 
 const initialChapters: ChapterListItem[] = [
@@ -21,7 +22,8 @@ export function AppRouter() {
   const [chapters, setChapters] = useState<ChapterListItem[]>(initialChapters)
 
   return (
-    <Routes>
+    <ParticipantGate>
+      <Routes>
       <Route path="/" element={<HomeRoute />} />
       <Route
         path="/books/:bookId"
@@ -49,6 +51,7 @@ export function AppRouter() {
           />
         )}
       />
-    </Routes>
+      </Routes>
+    </ParticipantGate>
   )
 }
