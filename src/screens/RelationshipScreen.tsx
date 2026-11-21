@@ -37,7 +37,7 @@ export function RelationshipScreen({
     : relationships
 
   return (
-    <main className="screen flow-screen">
+    <main className="screen flow-screen relationship-selection-screen">
       <StatusBar />
       <PageHeader title="새 책 만들기" onBack={onBack} />
       <section className={`flow-content relation-content ${selectedRelationship ? 'has-selection' : ''}`}>

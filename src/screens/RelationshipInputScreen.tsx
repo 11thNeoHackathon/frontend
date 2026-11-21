@@ -3,7 +3,6 @@ import { PageHeader } from '../components/PageHeader'
 import { StatusBar } from '../components/StatusBar'
 import type { Relationship } from '../types/invite'
 
-const suggestedRelationships = ['이모', '삼촌', '고모', '외할머니', '친구']
 const maxRelationshipLength = 10
 
 interface RelationshipInputScreenProps {
@@ -12,7 +11,7 @@ interface RelationshipInputScreenProps {
 }
 
 export function RelationshipInputScreen({ onBack, onSubmit }: RelationshipInputScreenProps) {
-  const [relationship, setRelationship] = useState('이모')
+  const [relationship, setRelationship] = useState('')
   const normalizedRelationship = relationship.trim()
 
   return (
@@ -29,6 +28,7 @@ export function RelationshipInputScreen({ onBack, onSubmit }: RelationshipInputS
             <input
               value={relationship}
               maxLength={maxRelationshipLength}
+              placeholder="부르는 그대로 적어주세요. 예: 이모, 삼촌, 고모, 친구"
               onChange={(event) => setRelationship(event.target.value)}
               aria-label="초대할 가족 관계"
             />
@@ -36,15 +36,6 @@ export function RelationshipInputScreen({ onBack, onSubmit }: RelationshipInputS
           </span>
           <small>부르는 그대로 적어주세요. 예: 이모, 삼촌, 고모, 친구</small>
         </label>
-
-        <div className="relationship-suggestions">
-          <span>자주 쓰는 관계</span>
-          <div>
-            {suggestedRelationships.map((suggestion) => (
-              <button type="button" onClick={() => setRelationship(suggestion)} key={suggestion}>{suggestion}</button>
-            ))}
-          </div>
-        </div>
 
         <div className="relation-note input-note">
           <strong>링크를 보내면 상대가 수락했을 때 책이 만들어져요.</strong>
@@ -58,7 +49,7 @@ export function RelationshipInputScreen({ onBack, onSubmit }: RelationshipInputS
           disabled={!normalizedRelationship}
           onClick={() => onSubmit(normalizedRelationship)}
         >
-          초대 링크 만들기
+          {normalizedRelationship ? '초대 링크 만들기' : '추가 하기'}
         </button>
       </div>
       <div className="home-indicator" aria-hidden="true" />

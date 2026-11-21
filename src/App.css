@@ -386,6 +386,26 @@ button { font: inherit; }
   padding-top: 4px;
 }
 
+.relationship-selection-screen {
+  height: max(100svh, 874px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.relationship-selection-screen .relation-content {
+  min-height: 0;
+  padding-bottom: 48px;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.relationship-selection-screen .relation-content::-webkit-scrollbar {
+  display: none;
+}
+
 .relation-content h1,
 .invitation-content h1,
 .relationship-input-content h1 {
@@ -508,31 +528,11 @@ button { font: inherit; }
   font-size: 14px;
 }
 
+.relationship-input-wrap input::placeholder {
+  color: var(--color-gray-40);
+}
+
 .relationship-input-wrap small { color: var(--color-gray-30); }
-
-.relationship-suggestions {
-  margin-top: 24px;
-  color: var(--color-gray-30);
-  font-size: 12px;
-}
-
-.relationship-suggestions div {
-  margin-top: 8px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.relationship-suggestions button {
-  min-width: 48px;
-  height: 32px;
-  padding: 0 12px;
-  border: 0;
-  color: var(--color-gray-20);
-  background: var(--color-gray-80);
-  font-size: 12px;
-  cursor: pointer;
-}
 
 .input-note { margin-top: 28px; }
 
@@ -677,11 +677,6 @@ button { font: inherit; }
   font-size: 14px;
   transform: translateX(-50%);
   animation: toast-in .18s ease-out;
-}
-
-.copy-toast-error {
-  color: var(--color-white);
-  background: var(--color-gray-20);
 }
 
 @keyframes toast-in {
