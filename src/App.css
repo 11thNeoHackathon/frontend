@@ -865,6 +865,9 @@ button { font: inherit; }
   letter-spacing: -0.32px;
 }
 
+.chapter-open { flex: 1; cursor: pointer; }
+.chapter-open:focus-visible { outline: 2px solid var(--color-black); outline-offset: 4px; }
+
 .chapter-tags {
   margin-top: 6px;
   display: flex;

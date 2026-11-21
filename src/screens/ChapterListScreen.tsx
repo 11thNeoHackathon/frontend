@@ -17,11 +17,12 @@ interface ChapterListScreenProps {
   book:Book
   chapters: ChapterListItem[]
   onDeleteChapter:(id:string)=>void
+  onOpenChapter:(id:string)=>void
   onBack: () => void
   onAddChapter: (bookId: string) => void
 }
 
-export function ChapterListScreen({ book, chapters, onDeleteChapter, onBack, onAddChapter }: ChapterListScreenProps) {
+export function ChapterListScreen({ book, chapters, onDeleteChapter, onOpenChapter, onBack, onAddChapter }: ChapterListScreenProps) {
   const { bookId = 'mom' } = useParams()
 
   return (
@@ -51,7 +52,14 @@ export function ChapterListScreen({ book, chapters, onDeleteChapter, onBack, onA
               <div className="chapter-number">{String(index + 1).padStart(2, '0')}</div>
               <img className="chapter-timeline" src={index % 2 === 0 ? timelineA : timelineB} alt="" />
               <article>
-                <div>
+                <div
+                  className="chapter-open"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${chapter.title} 열기`}
+                  onClick={() => onOpenChapter(chapter.id)}
+                  onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onOpenChapter(chapter.id) } }}
+                >
                   <h3>{chapter.title}</h3>
                   <div className="chapter-tags">
                     {chapter.tags.map((tag) => <span className={tag.tone} key={tag.label}>{tag.label}</span>)}
