@@ -187,6 +187,7 @@ button { font: inherit; }
 
 .mission-chip.green { color: var(--color-green-20); background: var(--color-green-10); }
 .mission-chip.pink { color: var(--color-pink-20); background: var(--color-pink-10); }
+.mission-chip.read { color: #087aa0; background: #d9f6ff; }
 
 .mission-copy {
   min-width: 0;
