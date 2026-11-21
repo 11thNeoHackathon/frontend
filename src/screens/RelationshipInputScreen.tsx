@@ -8,10 +8,11 @@ const maxRelationshipLength = 10
 interface RelationshipInputScreenProps {
   onBack: () => void
   onSubmit: (relationship: Relationship) => void
+  selected?:string
 }
 
-export function RelationshipInputScreen({ onBack, onSubmit }: RelationshipInputScreenProps) {
-  const [relationship, setRelationship] = useState('')
+export function RelationshipInputScreen({ onBack, onSubmit, selected }: RelationshipInputScreenProps) {
+  const [relationship, setRelationship] = useState(selected ?? '')
   const normalizedRelationship = relationship.trim()
 
   return (
@@ -19,8 +20,8 @@ export function RelationshipInputScreen({ onBack, onSubmit }: RelationshipInputS
       <StatusBar />
       <PageHeader title="새 엽서 만들기" onBack={onBack} />
       <section className="flow-content relationship-input-content">
-        <h1>초대할 가족이<br />나의 누구인지 적어주세요</h1>
-        <p className="description">서로의 청춘에 답장을 보내요</p>
+        <h1>초대할 가족이<br />나의 누구인지 알려주세요.</h1>
+        <p className="description">서로의 청춘을 엽서로 주고받아요</p>
 
         <label className="relationship-field">
           <span>관계</span>

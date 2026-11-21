@@ -314,3 +314,28 @@
   .chapter-book-cover { min-height: 325px; margin: 34px 12px 28px; }
   .memory-paper { min-height: 205px; }
 }
+
+.chapter-reading-phone { background:linear-gradient(160deg,#fff 25%,#ddf6fe 100%); }
+.chapter-reading-header { min-height:48px; padding:0 24px; }
+.chapter-content-screen { padding-top:18px; padding-bottom:40px; }
+.chapter-kicker { color:#73dbff; font-size:20px; line-height:28px; margin-bottom:4px; }
+.chapter-screen-title { font-size:24px !important; line-height:34px; }
+.story-papers,.reflection-papers { gap:24px; margin-top:28px; }
+.memory-paper { min-height:250px; padding:20px 18px; }
+.memory-paper h2 { display:flex; align-items:center; gap:6px; }
+.memory-paper p { font-size:14px; line-height:40px; }
+.memory-paper.green { transform:rotate(3.34deg); background-color:#fff; box-shadow:-5px 14px 0 #efffd2; }
+.memory-paper.pink { transform:rotate(-3.22deg); background-color:#fff; box-shadow:5px 7px 0 #ffecff; }
+.reflection-paper.green { background-color:#efffd2; transform:rotate(-4.6deg); }
+.reflection-paper.pink { background-color:#ffecff; transform:rotate(3.7deg); }
+.chapter-page-navigation button { width:62px; height:62px; color:#73dbff; border-color:#73dbff; background:white; }
+.chapter-page-dots { visibility:hidden; }
+
+.memory-paper[role="button"] { cursor:pointer; transition:background-color .2s ease; }
+.memory-paper[role="button"]:focus-visible { outline:3px solid #079ccc; outline-offset:5px; }
+.story-papers .reflection-paper.green { background:#efffd2; }
+.story-papers .reflection-paper.pink { background:#ffecff; }
+.story-writing-form { gap:14px; }
+.story-writing-form label { display:flex; flex-direction:column; gap:8px; margin-top:14px; color:#52656b; font-size:14px; }
+.story-writing-form input,.story-writing-form textarea { width:100%; box-sizing:border-box; padding:14px; border:1px solid #d9dadd; border-radius:4px; font:inherit; }
+.story-writing-form textarea { min-height:140px; resize:vertical; }
