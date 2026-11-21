@@ -1,0 +1,27 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "routes": [
+    {
+      "src": "/api/v1/(.*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "sec-fetch-site",
+          "value": "same-origin"
+        }
+      ],
+      "dest": "https://3.104.111.132/api/v1/$1",
+      "transforms": [
+        {
+          "type": "request.headers",
+          "op": "delete",
+          "target": { "key": "origin" }
+        }
+      ]
+    },
+    {
+      "src": "/api/v1/(.*)",
+      "dest": "https://3.104.111.132/api/v1/$1"
+    }
+  ]
+}

@@ -18,6 +18,17 @@
 - 가족 선택 화면에서 관계 추가 `+`를 누른다 → 관계를 직접 입력한다 → 등록한 관계가 선택된 가족 카드로 표시되고 초대 링크를 만들 수 있다.
 - 초대 링크 복사에 성공하면 완료 안내가, 클립보드 권한 등으로 실패하면 실패 안내가 표시된다.
 - 초대 화면에서 완료한 뒤 새 책 만들기를 다시 시작하면 이전 관계가 선택되지 않은 초기 상태로 표시된다.
+## 배포 API와 세션 쿠키
+
+Vercel의 `vercel.json`은 프론트 주소에서 시작한 `/api/v1/*` 요청을 EC2의 HTTPS API로 전달합니다. 배포용 API 호출에는 `/api/v1/...` 상대 경로와 `credentials: 'include'`를 사용합니다.
+
+```ts
+const response = await fetch('/api/v1/participants/me', {
+  credentials: 'include',
+})
+```
+
+프론트가 새 빌드에 배포된 상황 → 같은 프론트 주소에서 참여자 생성 또는 초대 수락 후 다시 참여자 정보를 조회한다 → 브라우저가 `participant_session` 쿠키를 저장하고 다음 `/api/v1/participants/me` 요청에 보내 `200`을 받는다. 새 브라우저에서 세션 없이 조회하면 `401 SESSION_REQUIRED`가 반환된다.
 
 ## React + TypeScript + Vite
 
