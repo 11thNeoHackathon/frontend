@@ -19,7 +19,7 @@ interface InvitationScreenProps {
 }
 
 export function InvitationScreen({ relationship, onBack, onDone }: InvitationScreenProps) {
-  const [copyStatus, setCopyStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [copyStatus, setCopyStatus] = useState<'idle' | 'success'>('idle')
   const inviteUrl = 'https://(서비스 주소)/invite/a8k2x9'
 
   useEffect(() => {
@@ -28,13 +28,9 @@ export function InvitationScreen({ relationship, onBack, onDone }: InvitationScr
     return () => window.clearTimeout(timer)
   }, [copyStatus])
 
-  const copyInvite = async () => {
-    try {
-      await navigator.clipboard.writeText(inviteUrl)
-      setCopyStatus('success')
-    } catch {
-      setCopyStatus('error')
-    }
+  const copyInvite = () => {
+    void navigator.clipboard.writeText(inviteUrl).catch(() => undefined)
+    setCopyStatus('success')
   }
 
   return (
@@ -58,9 +54,9 @@ export function InvitationScreen({ relationship, onBack, onDone }: InvitationScr
         </div>
       </section>
       {copyStatus !== 'idle' && (
-        <div className={`copy-toast ${copyStatus === 'error' ? 'copy-toast-error' : ''}`} role="status">
+        <div className="copy-toast" role="status">
           <CopyIcon />
-          <span>{copyStatus === 'success' ? '복사가 완료되었어요.' : '링크를 복사하지 못했어요.'}</span>
+          <span>복사가 완료되었어요.</span>
         </div>
       )}
       <div className="fixed-footer"><button className="primary-button" type="button" onClick={onDone}>완료</button></div>

@@ -87,7 +87,8 @@ button { font: inherit; }
 }
 
 .home-hero {
-  height: 371px;
+  min-height: 371px;
+  padding-bottom: 28px;
   background: var(--color-main-80);
 }
 
@@ -147,6 +148,12 @@ button { font: inherit; }
   letter-spacing: -0.28px;
 }
 
+.home-logo { display: block; width: 104px; height: 19px; object-fit: contain; }
+.home-mission-count { margin: 4px 24px 0; color: var(--color-main-20); font-size: 14px; line-height: 1.6; letter-spacing: -0.28px; }
+.mission-message { margin: 16px 24px 0; padding: 18px 14px; border-radius: 4px; color: var(--color-gray-20); background: #fff; font-size: 14px; line-height: 1.6; }
+.retry-button { display: inline-flex; align-items: center; justify-content: center; min-height: 36px; margin-top: 12px; padding: 0 12px; border: 1px solid var(--color-gray-30); border-radius: 4px; color: var(--color-gray-5); background: #fff; font: inherit; font-size: 14px; cursor: pointer; }
+.error, .form-error { color: #b42318 !important; }
+
 .mission-list {
   padding: 20px 24px 0;
   display: grid;
@@ -180,6 +187,7 @@ button { font: inherit; }
 
 .mission-chip.green { color: var(--color-green-20); background: var(--color-green-10); }
 .mission-chip.pink { color: var(--color-pink-20); background: var(--color-pink-10); }
+.mission-chip.read { color: #087aa0; background: #d9f6ff; }
 
 .mission-copy {
   min-width: 0;
@@ -386,6 +394,26 @@ button { font: inherit; }
   padding-top: 4px;
 }
 
+.relationship-selection-screen {
+  height: max(100svh, 874px);
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.relationship-selection-screen .relation-content {
+  min-height: 0;
+  padding-bottom: 48px;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.relationship-selection-screen .relation-content::-webkit-scrollbar {
+  display: none;
+}
+
 .relation-content h1,
 .invitation-content h1,
 .relationship-input-content h1 {
@@ -491,7 +519,7 @@ button { font: inherit; }
 .relationship-input-wrap {
   height: 48px;
   padding: 0 12px;
-  border: 1px solid var(--color-main-50);
+  border: 1px solid var(--color-gray-40);
   display: flex;
   align-items: center;
   background: var(--color-white);
@@ -508,33 +536,9 @@ button { font: inherit; }
   font-size: 14px;
 }
 
-.relationship-input-wrap small { color: var(--color-gray-30); }
-
-.relationship-suggestions {
-  margin-top: 24px;
-  color: var(--color-gray-30);
-  font-size: 12px;
+.relationship-input-wrap input::placeholder {
+  color: var(--color-gray-40);
 }
-
-.relationship-suggestions div {
-  margin-top: 8px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.relationship-suggestions button {
-  min-width: 48px;
-  height: 32px;
-  padding: 0 12px;
-  border: 0;
-  color: var(--color-gray-20);
-  background: var(--color-gray-80);
-  font-size: 12px;
-  cursor: pointer;
-}
-
-.input-note { margin-top: 28px; }
 
 .primary-button:disabled {
   color: var(--color-gray-40);
@@ -679,10 +683,39 @@ button { font: inherit; }
   animation: toast-in .18s ease-out;
 }
 
-.copy-toast-error {
-  color: var(--color-white);
-  background: var(--color-gray-20);
-}
+.detail-page { position: relative; min-height: 100svh; padding: 0 24px 110px; background: #fff; }
+.detail-page .ios-status-bar { margin: 0 -24px; }
+.detail-nav { display: flex; align-items: center; gap: 22px; height: 48px; color: var(--color-gray-5); }
+.detail-nav strong { font-size: 17px; }
+.detail-page .back-button { display: grid; width: 32px; height: 38px; place-items: center; border: 0; border-radius: 50%; background: transparent; color: inherit; cursor: pointer; }
+.detail-page .back-button img { width: 20px; height: 20px; transform: rotate(180deg); }
+.chapter-heading { padding: 8px 0 26px; }
+.chapter-heading span { color: var(--color-main-50); font-size: 20px; letter-spacing: -0.4px; }
+.chapter-heading h1 { margin: 4px 0 7px; color: var(--color-black); font-size: 24px; font-weight: 700; letter-spacing: -0.48px; line-height: 1.4; }
+.chapter-heading p { color: var(--color-gray-30); font-size: 14px; line-height: 1.6; }
+.mission-label { display: inline-flex; min-height: 30px; align-items: center; padding: 6px 10px; border-radius: 2px; color: var(--color-green-20); background: var(--color-green-10); font-size: 12px; }
+.mission-prompt { display: grid; justify-items: start; gap: 12px; padding: 16px; border: 1px solid var(--color-green-10); border-radius: 4px; background: var(--color-green-5); }
+.mission-prompt p { margin: 0; color: var(--color-black); font-size: 16px; font-weight: 600; line-height: 1.4; letter-spacing: -0.32px; }
+.reflection-form { display: grid; gap: 12px; margin-top: 24px; padding-bottom: 100px; }
+.reflection-form label { font-size: 15px; font-weight: 500; }
+.reflection-form textarea { width: 100%; height: 322px; min-height: 250px; padding: 14px 10px; resize: vertical; border: 1px solid var(--color-gray-30); border-radius: 4px; color: var(--color-gray-5); background: repeating-linear-gradient(to bottom, #fff 0, #fff 39px, var(--color-gray-70) 40px, #fff 41px); font: inherit; line-height: 40px; }
+.reflection-form textarea:focus { outline: 2px solid var(--color-main-60); outline-offset: 1px; }
+.submit-button { position: fixed; z-index: 2; bottom: 39px; left: 50%; width: min(354px, calc(100vw - 48px)); min-height: 57px; margin-top: 16px; transform: translateX(-50%); border: 0; border-radius: 4px; color: var(--color-gray-5); background: var(--color-main-60); font: inherit; font-size: 18px; font-weight: 600; cursor: pointer; }
+.submit-button:disabled { color: var(--color-gray-30); background: var(--color-gray-80); cursor: not-allowed; }
+.submit-button.secondary { position: static; width: 100%; margin-top: 28px; transform: none; }
+.detail-message { margin-top: 60px; font-size: 15px; text-align: center; }
+.detail-message.error { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.status-panel { margin-top: 16px; padding: 30px 18px; border-radius: 8px; background: var(--color-gray-80); text-align: center; }
+.status-icon { display: grid; width: 40px; height: 40px; margin: 0 auto 14px; place-items: center; border-radius: 50%; color: var(--color-main-20); background: var(--color-main-80); font-size: 21px; }
+.status-panel h2 { margin: 0 0 8px; font-size: 19px; }
+.status-panel p { color: var(--color-gray-30); font-size: 14px; line-height: 1.6; }
+.form-error { margin: 0; font-size: 13px; }
+.ios-status-bar { display: flex; height: 53px; flex: 0 0 53px; align-items: center; justify-content: space-between; padding: 0 34px; color: var(--color-gray-5); font-size: 15px; font-weight: 600; letter-spacing: -0.45px; }
+.ios-status-icons { display: flex; align-items: center; gap: 6px; }
+.ios-status-icons img:first-child { width: 41.108px; height: 11.686px; }
+.ios-status-icons img:last-child { width: 25.551px; height: 12.154px; }
+.ios-home-indicator { position: fixed; z-index: 20; right: 0; bottom: 0; left: 0; display: flex; height: 36px; align-items: center; justify-content: center; pointer-events: none; }
+.ios-home-indicator span { width: 144px; height: 5px; margin-top: 4px; border-radius: 99px; background: #000; }
 
 .chapter-book-hero {
   height: 430px;
