@@ -12,6 +12,11 @@
 
 엄마가 보낸 미션은 자녀가 열어보거나 ‘나중에 하기’를 눌러도 수행 대기로 표시합니다. 자녀가 감상을 제출한 뒤 엄마가 홈을 다시 열면 수행 완료가 표시되고, 항목을 누르면 그 감상이 열립니다. 아빠의 To-do에는 이 미션이 보이지 않아야 합니다. [공통 시연 시나리오 3~5단계](https://github.com/11thNeoHackathon/backend/blob/main/docs/%EC%8B%9C%EC%97%B0%20%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.md)
 
+## 현재 구현 시나리오
+
+- 홈에서 새 책 추가를 누른다 → 가족 관계를 하나 선택하고 초대 링크를 만든다 → 선택한 가족용 초대 링크 화면과 3초 복사 완료 토스트가 표시된다.
+- 가족 선택 화면에서 관계 추가 `+`를 누른다 → 엄마 초대 링크 화면으로 바로 이동한다.
+
 ## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
