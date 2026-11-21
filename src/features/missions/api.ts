@@ -57,10 +57,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     throw new ApiError('서버에 연결할 수 없어요. 잠시 후 다시 시도해 주세요.', 0)
   }
   const body = (await response.json().catch(() => null)) as ApiEnvelope<T> | null
-  if (!response.ok || !body?.success || body.data === null) {
+  if (!response.ok || !body?.success) {
     throw new ApiError(body?.error?.message ?? '요청을 처리하지 못했어요.', response.status, body?.error?.code)
   }
-  return body.data
+  // 챕터 삭제처럼 성공해도 data가 null인 응답이 있다.
+  return body.data as T
 }
 
 export const missionApi = {
