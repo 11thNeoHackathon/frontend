@@ -680,6 +680,459 @@ button { font: inherit; }
   to { opacity: 1; transform: translate(-50%, 0); }
 }
 
+.chapter-list-screen {
+  height: max(100svh, 874px);
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.chapter-list-hero {
+  height: 474.03px;
+  background: var(--color-main-90);
+  box-sizing: border-box;
+}
+
+.chapter-list-hero .page-header,
+.chapter-create-screen .page-header {
+  height: 48px;
+  background: transparent;
+}
+
+.chapter-create-screen .page-header strong {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.chapter-book-cover {
+  width: 354px;
+  margin: 24px auto 0;
+}
+
+.chapter-book-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chapter-book-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.48px;
+}
+
+.chapter-book-link {
+  width: 20px;
+  height: 19.7469px;
+  display: block;
+  transform: rotate(90deg);
+}
+
+.chapter-book-copy p {
+  margin: 0;
+  color: var(--color-gray-5);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+}
+
+.chapter-book-copy p strong {
+  color: var(--color-main-50);
+  font-size: 24px;
+  letter-spacing: -0.48px;
+}
+
+.chapter-postcard-mascot {
+  position: relative;
+  width: 354.109px;
+  height: 228.741px;
+  margin-top: 16px;
+  display: block;
+}
+
+.chapter-postcard-mascot span {
+  position: absolute;
+  top: 46px;
+  left: 98px;
+  width: 243.751px;
+  height: 162.501px;
+  border-radius: 4px;
+  background: var(--color-main-60);
+  transform: rotate(10.13deg);
+}
+
+.chapter-postcard-mascot img {
+  position: absolute;
+  top: 16px;
+  left: 9px;
+  width: 290.789px;
+  height: 169.554px;
+  transform: rotate(-6.46deg);
+}
+
+.chapter-list-content {
+  height: 400px;
+  padding: 16px 24px 44px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  box-sizing: border-box;
+}
+
+.chapter-list-content::-webkit-scrollbar {
+  display: none;
+}
+
+.chapter-list-heading {
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chapter-list-heading h1 {
+  margin: 0;
+  color: var(--color-gray-5);
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+}
+
+.chapter-list-heading h1 strong {
+  color: var(--color-main-50);
+  font-size: 24px;
+  letter-spacing: -0.48px;
+}
+
+.chapter-list-heading button {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  color: var(--color-gray-20);
+  background: var(--color-gray-80);
+  font-size: 27px;
+  font-weight: 300;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.chapter-list {
+  width: 353px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.chapter-list-row {
+  position: relative;
+  min-height: 101px;
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 12px;
+}
+
+.chapter-number {
+  z-index: 1;
+  color: var(--color-main-50);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.48px;
+}
+
+.chapter-thread {
+  position: absolute;
+  top: 38px;
+  left: 9px;
+  width: 11px;
+  height: 63px;
+}
+
+.chapter-summary-card {
+  min-height: 91px;
+  margin-top: 10px;
+  padding: 16px;
+  border: 1px solid var(--color-gray-50);
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  background: var(--color-white);
+  box-sizing: border-box;
+}
+
+.chapter-summary-copy {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.chapter-summary-copy h2 {
+  margin: 0;
+  color: var(--color-black);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.32px;
+}
+
+.chapter-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chapter-tag {
+  padding: 6px 10px;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.24px;
+  white-space: nowrap;
+}
+
+.chapter-tag.green {
+  color: var(--color-green-20);
+  background: var(--color-green-5);
+}
+
+.chapter-tag.pink {
+  color: var(--color-pink-20);
+  background: var(--color-pink-10);
+}
+
+.chapter-tag.purple {
+  color: var(--color-purple-20);
+  background: var(--color-purple-5);
+}
+
+.chapter-delete-button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  flex: 0 0 24px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.chapter-delete-button img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.chapter-delete-button:disabled {
+  cursor: default;
+}
+
+.chapter-delete-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, .5);
+}
+
+.chapter-delete-dialog {
+  width: 340px;
+  height: 223px;
+  padding: 20px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: var(--color-white);
+  box-sizing: border-box;
+}
+
+.chapter-delete-copy {
+  width: 206px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: center;
+}
+
+.chapter-delete-target {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.chapter-delete-target strong {
+  color: var(--color-main-50);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.chapter-delete-target span {
+  color: var(--color-gray-5);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.chapter-delete-copy h2 {
+  margin: 0 0 8px;
+  color: var(--color-gray-5);
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.chapter-delete-copy p {
+  margin: 0;
+  color: var(--color-gray-40);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.chapter-delete-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.chapter-delete-actions button {
+  flex: 1;
+  padding: 16px 10px;
+  border: 0;
+  border-radius: 4px;
+  color: var(--color-gray-20);
+  background: var(--color-gray-80);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chapter-delete-actions .confirm {
+  color: var(--color-white);
+  background: #fd7973;
+}
+
+.chapter-create-screen {
+  height: max(100svh, 874px);
+  min-height: 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.chapter-create-content {
+  position: relative;
+  z-index: 2;
+  padding: 18px 24px 120px;
+}
+
+.chapter-create-heading strong {
+  color: var(--color-main-50);
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.chapter-create-heading h1 {
+  margin: 4px 0 0;
+  color: var(--color-gray-5);
+  font-size: 24px;
+  line-height: 1.4;
+  letter-spacing: -0.48px;
+}
+
+.chapter-title-field {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--color-gray-20);
+  font-size: 15px;
+}
+
+.chapter-title-field input {
+  width: 100%;
+  height: 56px;
+  padding: 0 16px;
+  border: 1px solid var(--color-gray-40);
+  border-radius: 4px;
+  color: var(--color-gray-5);
+  background: var(--color-white);
+  box-sizing: border-box;
+  font: inherit;
+  font-size: 16px;
+  outline: none;
+}
+
+.chapter-title-field input:focus {
+  border-color: var(--color-gray-20);
+}
+
+.chapter-title-field input::placeholder {
+  color: var(--color-gray-50);
+}
+
+.chapter-info-box {
+  margin-top: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border-radius: 4px;
+  background: var(--color-gray-80);
+}
+
+.chapter-info-box strong {
+  color: var(--color-gray-5);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.chapter-info-box span {
+  color: var(--color-gray-40);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.chapter-create-mascot {
+  position: absolute;
+  z-index: 0;
+  top: 400px;
+  left: -4px;
+  width: 473.294px;
+  height: 437.788px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chapter-create-mascot img {
+  transform: rotate(-12.95deg);
+}
+
+.chapter-create-footer {
+  position: absolute;
+  z-index: 2;
+  right: 24px;
+  bottom: 39px;
+  left: 24px;
+}
+
 @media (min-width: 520px) {
   body { background: #eef0f2; }
   .app-shell { box-shadow: 0 0 0 1px rgba(0, 0, 0, .06), 0 16px 48px rgba(18, 29, 35, .12); }
