@@ -3,7 +3,7 @@ import { ApiError, missionApi, type Chapter } from './api'
 import arrowRight from './assets/arrow-right.svg'
 import { HomeIndicator, StatusBar } from './StatusChrome'
 
-export function MissionDetail({ chapterId, counterpart, onBack }: { chapterId: number; counterpart: string; onBack: () => void }) {
+export function MissionDetail({ chapterId, counterpart, onBack, onReadChapter }: { chapterId: number; counterpart: string; onBack: () => void; onReadChapter: () => void }) {
   const [chapter, setChapter] = useState<Chapter | null>(null)
   const [content, setContent] = useState('')
   const [loading, setLoading] = useState(true)
@@ -55,7 +55,7 @@ export function MissionDetail({ chapterId, counterpart, onBack }: { chapterId: n
     <StatusBar />
     {navigation}
     <div className="chapter-heading"><span>chapter. {String(chapter.id).padStart(2, '0')}</span><h1>{chapterTitle} 이야기</h1><p>{counterpart}와 내가 모두 미션을 하면 {chapterTitle} 챕터가 열려요.</p></div>
-    {opened ? <section className="status-panel"><span className="status-icon">✓</span><h2>챕터가 열렸어요</h2><p>가족이 남긴 이야기를 함께 확인해 보세요.</p></section>
+    {opened ? <section className="status-panel"><span className="status-icon">✓</span><h2>챕터가 열렸어요</h2><p>가족이 남긴 이야기를 함께 확인해 보세요.</p><button className="submit-button" type="button" onClick={onReadChapter}>챕터 열어보기</button></section>
       : waiting ? <section className="status-panel"><span className="status-icon">…</span><h2>감상을 보냈어요</h2><p>상대방이 감상을 남기면 챕터가 열려요.</p></section>
         : chapter.nextAction !== 'DO_MISSION' ? <section className="status-panel"><h2>{chapter.nextAction === 'WAIT' ? '상대의 이야기를 기다리고 있어요' : '아직 미션을 시작할 수 없어요'}</h2><p>챕터가 준비되면 이곳에서 미션을 확인할 수 있어요.</p></section>
         : <section className="mission-prompt"><span className="mission-label">{counterpart}의 미션</span><p>{chapter.receivedMission ?? '미션 내용을 불러오지 못했어요.'}</p></section>}

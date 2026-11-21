@@ -8,6 +8,7 @@ export function HomeMissions({ onSelect }: { onSelect: (chapterId: number, count
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [reloadKey, setReloadKey] = useState(0)
+  const pendingCount = cards.filter(({ chapter }) => chapter.nextAction === 'DO_MISSION').length
 
   useEffect(() => {
     let active = true
@@ -22,7 +23,7 @@ export function HomeMissions({ onSelect }: { onSelect: (chapterId: number, count
         })))
         if (!active) return
         setCards(groups.flatMap(({ book, chapters }) => chapters
-          .filter((chapter) => chapter.nextAction === 'DO_MISSION' && chapter.receivedMission)
+          .filter((chapter) => chapter.nextAction === 'DO_MISSION' || chapter.nextAction === 'READ')
           .map((chapter) => ({ chapter, counterpart: book.counterpartLabel || '가족' }))))
       } catch (cause) {
         if (active) setError(cause instanceof ApiError ? cause.message : '미션을 불러오지 못했어요.')
@@ -35,14 +36,14 @@ export function HomeMissions({ onSelect }: { onSelect: (chapterId: number, count
   }, [reloadKey])
 
   return <div className="home-missions" aria-live="polite">
-    <p className="home-mission-count">총 {loading ? '…' : cards.length}건의 미션이 남아있습니다.</p>
+    <p className="home-mission-count">총 {loading ? '…' : pendingCount}건의 미션이 남아있습니다.</p>
     {loading ? <div className="mission-message">미션을 불러오고 있어요…</div>
       : error ? <div className="mission-message error" role="alert">{error}<button className="retry-button" type="button" onClick={() => setReloadKey((key) => key + 1)}>다시 시도</button></div>
         : cards.length === 0 ? <div className="mission-message">지금은 기다리는 미션이 없어요.</div>
           : <div className="mission-list">{cards.map(({ chapter, counterpart }) =>
             <button className="mission-card" type="button" key={chapter.id} onClick={() => onSelect(chapter.id, counterpart)}>
-              <span className={`mission-chip${counterpart.includes('아빠') ? ' pink' : ' green'}`}>{counterpart} X 나</span>
-              <span className="mission-copy"><small>chp{chapter.id}. {chapter.name}</small><strong>{chapter.receivedMission}</strong></span>
+              <span className={`mission-chip${chapter.nextAction === 'READ' ? ' read' : counterpart.includes('아빠') ? ' pink' : ' green'}`}>{chapter.nextAction === 'READ' ? '열린 챕터' : `${counterpart} X 나`}</span>
+              <span className="mission-copy"><small>chp{chapter.id}. {chapter.name}</small><strong>{chapter.nextAction === 'READ' ? '서로의 이야기와 후기 읽기' : chapter.receivedMission}</strong></span>
               <span className="chevron chevron-right" aria-hidden="true" />
             </button>)}</div>}
   </div>
