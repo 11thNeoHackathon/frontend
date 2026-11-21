@@ -26,12 +26,12 @@ export type Chapter = {
   myReflection: Reflection | null
   counterpartReflection: Reflection | null
 }
-export type Book = {
-  bookId: number
-  title: string
-  counterpartLabel?: string | null
-  counterpartName?: string | null
-}
+export type Book = { bookId:number; title:string; status?:string; mySlotNo?:number; counterpartLabel?:string|null; counterpartName?:string|null }
+export type CreatedBook = { book:Book; invitation:{code:string; inviteUrl:string; expiresAt:string} }
+export type Participant = { participantId:number; displayName:string; birthYear:number|null }
+export type ChapterDetails = Chapter & { openedAt:string|null; myStory:{title:string;content:string;missionInstruction:string}|null; counterpartStory:{title:string;content:string;missionInstruction:string}|null }
+
+let participantRegistration: Promise<Participant> | null = null
 
 export class ApiError extends Error {
   readonly status: number
@@ -65,8 +65,22 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
 export const missionApi = {
   getBooks: () => request<Book[]>('/api/v1/books'),
+  getBook: (bookId:number) => request<Book>(`/api/v1/books/${bookId}`),
+  createBook: (counterpartLabel:string) => request<CreatedBook>('/api/v1/books',{method:'POST',body:JSON.stringify({title:'청춘 교환일기',counterpartLabel})}),
+  createParticipant: (displayName:string) => {
+    if (!participantRegistration) {
+      participantRegistration = request<Participant>('/api/v1/participants',{method:'POST',body:JSON.stringify({displayName})})
+        .finally(() => { participantRegistration = null })
+    }
+    return participantRegistration
+  },
+  getParticipant: () => request<Participant>('/api/v1/participants/me'),
+  createChapter: (bookId:number,name:string) => request<Chapter>(`/api/v1/books/${bookId}/chapters`,{method:'POST',body:JSON.stringify({name})}),
+  deleteChapter: (chapterId:number) => request<void>(`/api/v1/chapters/${chapterId}`,{method:'DELETE'}),
   getChapters: (bookId: number) => request<Chapter[]>(`/api/v1/books/${bookId}/chapters`),
-  getChapter: (chapterId: number) => request<Chapter>(`/api/v1/chapters/${chapterId}`),
+  getChapter: (chapterId: number) => request<ChapterDetails>(`/api/v1/chapters/${chapterId}`),
+  writeStory: (chapterId:number,input:{title:string;content:string;missionInstruction:string}) => request<ChapterDetails>(`/api/v1/chapters/${chapterId}/story`,{method:'PUT',body:JSON.stringify(input)}),
+  completeStory: (chapterId:number) => request<ChapterDetails>(`/api/v1/chapters/${chapterId}/story/complete`,{method:'POST'}),
   saveReflection: (chapterId: number, content: string) =>
     request<Chapter>(`/api/v1/chapters/${chapterId}/reflection`, {
       method: 'PUT',

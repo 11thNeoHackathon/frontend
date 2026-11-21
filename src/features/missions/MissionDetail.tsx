@@ -1,3 +1,4 @@
+import ribbonGreen from '../../assets/hifi/ribbon-green.svg'
 import { useEffect, useState, type FormEvent } from 'react'
 import { ApiError, missionApi, type Chapter } from './api'
 import arrowRight from './assets/arrow-right.svg'
@@ -59,7 +60,7 @@ export function MissionDetail({ chapterId, counterpart, onBack, onReadChapter }:
     {opened ? <section className="status-panel"><span className="status-icon">✓</span><h2>챕터가 열렸어요</h2><p>가족이 남긴 이야기를 함께 확인해 보세요.</p><button className="submit-button" type="button" onClick={onReadChapter}>챕터 열어보기</button></section>
       : waiting ? <section className="status-panel"><span className="status-icon">…</span><h2>감상을 보냈어요</h2><p>상대방이 감상을 남기면 챕터가 열려요.</p></section>
         : chapter.nextAction !== 'DO_MISSION' ? <section className="status-panel"><h2>{chapter.nextAction === 'WAIT' ? '상대의 이야기를 기다리고 있어요' : '아직 미션을 시작할 수 없어요'}</h2><p>챕터가 준비되면 이곳에서 미션을 확인할 수 있어요.</p></section>
-        : <section className="mission-prompt"><span className="mission-label">{counterpart}의 미션</span><p>{chapter.receivedMission ?? '미션 내용을 불러오지 못했어요.'}</p></section>}
+        : <section className="mission-prompt"><img className="mission-ribbon" src={ribbonGreen} alt="" /><span className="mission-label">{counterpart}의 미션</span><p>{chapter.receivedMission ?? '미션 내용을 불러오지 못했어요.'}</p></section>}
     {canWrite && <form className="reflection-form" onSubmit={submit}>
       <label htmlFor="reflection">{waiting ? '감상을 수정할 수 있어요' : '나의 후기를 적어주세요.'}</label>
       <textarea id="reflection" value={content} onChange={(event) => setContent(event.target.value)} maxLength={10000} placeholder="미션을 하며 느낀 점을 적어주세요." />

@@ -1,13 +1,10 @@
+import ribbon from '../assets/hifi/ribbon.svg'
 import type { CSSProperties } from 'react'
+import { useEffect, useState } from 'react'
+import { ApiError, missionApi, type Book } from '../features/missions/api'
 import { StatusBar } from '../components/StatusBar'
 import { HomeMissions } from '../features/missions/HomeMissions'
 import logo from '../features/missions/assets/re-post.svg'
-
-const books = [
-  { id: 'mom', relationship: '엄마', tone: 'green', angle: -14 },
-  { id: 'dad', relationship: '아빠', tone: 'pink', angle: -14 },
-  { id: 'sister', relationship: '언니', tone: 'pending', angle: -9 },
-] as const
 
 function BellIcon() {
   return <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 20h4" /></svg>
@@ -29,7 +26,7 @@ function BookCard({ relationship, tone, angle, onClick }: { relationship: string
       <PaperStack tone={tone} angle={angle} />
       <span className="book-cover">
         <i className="pin top-left" /><i className="pin top-right" />
-        <span>{relationship}</span><b aria-hidden="true" /> <span>나</span>
+        <span>{relationship}</span><img className="family-ribbon" src={ribbon} alt="" /> <span>나</span>
         <i className="pin bottom-left" /><i className="pin bottom-right" />
       </span>
     </button>
@@ -43,6 +40,8 @@ interface HomeScreenProps {
 }
 
 export function HomeScreen({ onAddBook, onOpenBook, onSelectMission }: HomeScreenProps) {
+  const [books,setBooks]=useState<Book[]>([]); const [loading,setLoading]=useState(true); const [error,setError]=useState(''); const [reload,setReload]=useState(0)
+  useEffect(()=>{let active=true; missionApi.getBooks().then(data=>{if(active){setBooks(data);setError('')}}).catch(e=>{if(active)setError(e instanceof ApiError?e.message:'엽서함을 불러오지 못했어요.')}).finally(()=>{if(active)setLoading(false)});return()=>{active=false}},[reload])
   return (
     <main className="screen home-screen">
       <section className="home-hero">
@@ -57,9 +56,10 @@ export function HomeScreen({ onAddBook, onOpenBook, onSelectMission }: HomeScree
         <HomeMissions onSelect={onSelectMission} />
       </section>
       <section className="bookshelf-section">
-        <h2>내 책장</h2>
+        <h2>내 엽서함</h2>
         <div className="books-grid">
-          {books.map((book) => <BookCard key={book.id} {...book} onClick={() => onOpenBook(book.id)} />)}
+          {books.map((book) => <BookCard key={book.bookId} relationship={book.counterpartLabel || book.counterpartName || book.title} tone={book.mySlotNo === 2 ? 'pink' : 'green'} angle={-14} onClick={() => onOpenBook(String(book.bookId))} />)}
+          {loading && <p>엽서함을 불러오고 있어요…</p>}{error && <div role="alert">{error} <button type="button" onClick={()=>{setLoading(true);setReload(x=>x+1)}}>다시 시도</button></div>}{!loading&&!error&&books.length===0&&<p>아직 엽서함이 없어요. ＋를 눌러 가족을 초대해 보세요.</p>}
           <button className="add-book-card" type="button" onClick={onAddBook} aria-label="새 책 만들기"><span>＋</span></button>
         </div>
       </section>
