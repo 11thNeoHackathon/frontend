@@ -9,14 +9,14 @@ import copyIcon from '../../assets/hifi/copy.svg'
 import ribbonGreen from '../../assets/hifi/ribbon-green.svg'
 import ribbonPink from '../../assets/hifi/ribbon-pink.svg'
 
-type Step = 'list' | 'chapter' | 'story' | 'list-created' | 'reflection' | 'list-ready' | 'postcards' | 'home-done' | 'relationship' | 'invite' | 'arrival'
+type Step = 'home-start' | 'list' | 'chapter' | 'story' | 'list-created' | 'reflection' | 'list-ready' | 'postcards' | 'home-done' | 'relationship' | 'invite' | 'arrival'
 const family = [
   { name: '엄마', art: momArt }, { name: '아빠', art: dadArt },
   { name: '할머니', art: grandmaArt }, { name: '할아버지', art: grandpaArt },
 ]
 
 export function DemoVideoFlow() {
-  const [step, updateStep] = useState<Step>('list')
+  const [step, updateStep] = useState<Step>(() => window.location.search.includes('invite=mom') ? 'arrival' : 'home-start')
   const setStep = (next: Step) => { updateStep(next); window.scrollTo({ top: 0, behavior: 'instant' }) }
   const [title, setTitle] = useState('')
   const [story, setStory] = useState('')
@@ -28,13 +28,17 @@ export function DemoVideoFlow() {
   const inviteUrl = `${window.location.origin}/demo?invite=mom`
 
   const back = () => {
-    const previous: Record<Step, Step> = { list: 'list', chapter: 'list', story: 'chapter', 'list-created': 'story', reflection: 'list-created', 'list-ready': 'reflection', postcards: 'list-ready', 'home-done': 'postcards', relationship: 'home-done', invite: 'relationship', arrival: 'invite' }
+    const previous: Record<Step, Step> = { 'home-start': 'home-start', list: 'home-start', chapter: 'list', story: 'chapter', 'list-created': 'story', reflection: 'list-created', 'list-ready': 'reflection', postcards: 'list-ready', 'home-done': 'postcards', relationship: 'home-done', invite: 'relationship', arrival: 'invite' }
     setStep(previous[step])
   }
   const header = (label: string, canBack = true) => <header className="demo-nav"><button aria-label="뒤로" disabled={!canBack} onClick={back}>‹</button><span>{label}</span><span className="nav-spacer" /></header>
   const footer = (label: string, onClick: () => void, disabled = false) => <button className="demo-primary" disabled={disabled} onClick={onClick}>{label}</button>
 
   return <main className={`demo-shell demo-step-${step}`} lang="ko">
+    {step === 'home-start' && <>
+      <section className="demo-home-hero"><div className="demo-brand">RE Post</div><h1>오늘은 어떤 시절로 떠나볼까요?</h1><p>총 0건의 미션이 남아있습니다.</p><div className="empty-mission">지금은 기다리는 미션이 없어요.</div></section>
+      <section className="demo-bookshelf"><h2>내 엽서함</h2><div className="books-grid-demo"><button className="book-demo" onClick={() => setStep('list')}><div className="paper-stack-demo" style={{ background: '#caf984' }} /><strong>엄마 <i>↝</i> 나</strong></button><button className="add-demo" onClick={() => setStep('relationship')}>＋</button></div></section>
+    </>}
     {step === 'list' && <>
       <section className="demo-list-hero"><div className="demo-brand">RE Post</div><h1>엄마 <span>↝</span> 나</h1><p>현재 열람 가능한 엽서가 <b>1</b>개 있어요!</p><div className="hero-postcard"><img src={postcardArt} alt=""/><small>엽서를 눌러보세요!</small></div></section>
       <section className="demo-list-body"><div className="section-heading"><h2>지금까지 나눈 엽서 <b>1</b>개</h2><button aria-label="챕터 추가" onClick={() => setStep('chapter')}>＋</button></div>
