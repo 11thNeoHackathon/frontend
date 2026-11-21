@@ -1,4 +1,18 @@
-# React + TypeScript + Vite
+# 청춘교환 프론트엔드
+
+가족이 관계별 책에 추억을 쓰고 미션과 감상을 주고받는 React·TypeScript·Vite 프론트엔드입니다.
+
+## 개발 기준
+
+공통 작업 절차는 [AGENTS.md](AGENTS.md)를 따릅니다. 화면에서 사용하는 요청과 응답은 백엔드 Swagger를 기준으로 합니다. 계약이 비어 있으면 필요한 필드를 제안하고, 임시 데이터로 확인한 화면은 연동 점검 시 구분합니다.
+
+## 요청 예시
+
+> 홈에서 보낸 미션의 상태와 상대가 남긴 감상을 확인할 수 있게 해줘.
+
+엄마가 보낸 미션은 자녀가 열어보거나 ‘나중에 하기’를 눌러도 수행 대기로 표시합니다. 자녀가 감상을 제출한 뒤 엄마가 홈을 다시 열면 수행 완료가 표시되고, 항목을 누르면 그 감상이 열립니다. 아빠의 To-do에는 이 미션이 보이지 않아야 합니다. [공통 시연 시나리오 3~5단계](https://github.com/11thNeoHackathon/backend/blob/main/docs/%EC%8B%9C%EC%97%B0%20%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.md)
+
+## React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
