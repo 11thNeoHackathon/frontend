@@ -5,6 +5,7 @@ import { ChapterCreateScreen } from '../screens/ChapterCreateScreen'
 import { ChapterListScreen } from '../screens/ChapterListScreen'
 import { ApiError, missionApi, type Book, type Chapter } from '../features/missions/api'
 import type { ChapterListItem } from '../types/chapter'
+import { DemoVideoFlow } from '../features/demo/DemoVideoFlow'
 
 function HomeRoute() {
   const navigate = useNavigate()
@@ -25,4 +26,4 @@ function CreateChapterRoute(){const {bookId=''}=useParams();const navigate=useNa
  useEffect(()=>{let active=true;Number(bookId)>0?missionApi.getChapters(Number(bookId)).then(c=>{if(active)setChapters(c)}).catch(e=>{if(active)setError(e instanceof ApiError?e.message:'챕터 정보를 불러오지 못했어요.')}).finally(()=>{if(active)setLoading(false)}):Promise.resolve().then(()=>{setError('엽서함 주소가 올바르지 않아요.');setLoading(false)});return()=>{active=false}},[bookId])
  return <ChapterCreateScreen chapterNumber={chapters.length+1} error={loading?'챕터 정보를 불러오는 중이에요…':error} busy={busy||loading} onBack={id=>navigate(`/books/${id}`)} onCreate={async(id,title)=>{setBusy(true);setError('');try{await missionApi.createChapter(Number(id),title);navigate(`/books/${id}`)}catch(e){setError(e instanceof ApiError?e.message:'엽서를 만들지 못했어요.')}finally{setBusy(false)}}} />
 }
-export function AppRouter(){return <Routes><Route path="/" element={<HomeRoute/>}/><Route path="/books/:bookId" element={<BookRoute/>}/><Route path="/books/:bookId/chapters/new" element={<CreateChapterRoute/>}/></Routes>}
+export function AppRouter(){return <Routes><Route path="/" element={<HomeRoute/>}/><Route path="/demo" element={<DemoVideoFlow/>}/><Route path="/books/:bookId" element={<BookRoute/>}/><Route path="/books/:bookId/chapters/new" element={<CreateChapterRoute/>}/></Routes>}
