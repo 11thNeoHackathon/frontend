@@ -1,10 +1,7 @@
 import type { CSSProperties } from 'react'
 import { StatusBar } from '../components/StatusBar'
-
-const missions = [
-  { relationship: '엄마 X 나', chapter: 'chp4. 중학교 시절', title: '이 노래 끝까지 듣고 한 줄 후기', tone: 'green' },
-  { relationship: '아빠 X 나', chapter: 'chp2. 초등학교 시절', title: '요즘 하는 게임 10분 해보기', tone: 'pink' },
-] as const
+import { HomeMissions } from '../features/missions/HomeMissions'
+import logo from '../features/missions/assets/re-post.svg'
 
 const books = [
   { id: 'mom-and-me', relationship: '엄마', tone: 'green', angle: -14 },
@@ -47,30 +44,22 @@ function BookCard({ relationship, tone, angle, onClick }: {
 interface HomeScreenProps {
   onAddBook: () => void
   onOpenBook: (bookId: string) => void
+  onSelectMission: (chapterId: number, counterpart: string) => void
 }
 
-export function HomeScreen({ onAddBook, onOpenBook }: HomeScreenProps) {
+export function HomeScreen({ onAddBook, onOpenBook, onSelectMission }: HomeScreenProps) {
   return (
     <main className="screen home-screen">
       <section className="home-hero">
         <StatusBar />
         <div className="home-nav">
-          <div className="logo-placeholder">로고</div>
+          <img className="home-logo" src={logo} alt="RE Post" />
           <button className="icon-button notification" type="button" aria-label="알림"><BellIcon /></button>
         </div>
         <div className="home-copy">
           <h1>오늘은 어떤 시절로 떠나볼까요?</h1>
-          <p>총 2건의 미션이 남아있습니다.</p>
         </div>
-        <div className="mission-list">
-          {missions.map((mission) => (
-            <button className="mission-card" type="button" key={mission.relationship}>
-              <span className={`mission-chip ${mission.tone}`}>{mission.relationship}</span>
-              <span className="mission-copy"><small>{mission.chapter}</small><strong>{mission.title}</strong></span>
-              <span className="chevron chevron-right" aria-hidden="true" />
-            </button>
-          ))}
-        </div>
+        <HomeMissions onSelect={onSelectMission} />
       </section>
       <section className="bookshelf-section">
         <h2>내 엽서함</h2>
