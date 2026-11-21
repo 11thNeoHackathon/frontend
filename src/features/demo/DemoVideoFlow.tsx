@@ -16,7 +16,8 @@ const family = [
 ]
 
 export function DemoVideoFlow() {
-  const [step, setStep] = useState<Step>('list')
+  const [step, updateStep] = useState<Step>('list')
+  const setStep = (next: Step) => { updateStep(next); window.scrollTo({ top: 0, behavior: 'instant' }) }
   const [title, setTitle] = useState('')
   const [story, setStory] = useState('')
   const [mission, setMission] = useState('')
@@ -33,7 +34,7 @@ export function DemoVideoFlow() {
   const header = (label: string, canBack = true) => <header className="demo-nav"><button aria-label="뒤로" disabled={!canBack} onClick={back}>‹</button><span>{label}</span><span className="nav-spacer" /></header>
   const footer = (label: string, onClick: () => void, disabled = false) => <button className="demo-primary" disabled={disabled} onClick={onClick}>{label}</button>
 
-  return <main className="demo-shell">
+  return <main className={`demo-shell demo-step-${step}`} lang="ko">
     {step === 'list' && <>
       <section className="demo-list-hero"><div className="demo-brand">RE Post</div><h1>엄마 <span>↝</span> 나</h1><p>현재 열람 가능한 엽서가 <b>1</b>개 있어요!</p><div className="hero-postcard"><img src={postcardArt} alt=""/><small>엽서를 눌러보세요!</small></div></section>
       <section className="demo-list-body"><div className="section-heading"><h2>지금까지 나눈 엽서 <b>2</b>개</h2><button aria-label="챕터 추가" onClick={() => setStep('chapter')}>＋</button></div>
@@ -51,7 +52,7 @@ export function DemoVideoFlow() {
 
     {step === 'story' && <>
       {header('추억과 미션 건네기')}
-      <section className="demo-form"><p className="chapter-kicker">chapter. 04</p><h1>{title || '중학교 시절 이야기'}</h1><label htmlFor="story-title">제목</label><input id="story-title" value={story.split('\n')[0] || ''} onChange={e => setStory(`${e.target.value}${story.includes('\n') ? story.slice(story.indexOf('\n')) : ''}`)} placeholder="" /><label htmlFor="story-body">나의 추억을 적어주세요</label><textarea id="story-body" value={story.includes('\n') ? story.slice(story.indexOf('\n') + 1) : ''} onChange={e => setStory(`${story.split('\n')[0] || ''}\n${e.target.value}`)} placeholder="" /><label htmlFor="mission-body">상대에게 보낼 미션</label><textarea className="mission-input" id="mission-body" value={mission} onChange={e => setMission(e.target.value)} placeholder="" /></section>
+      <section className="demo-form"><p className="chapter-kicker">chapter. 04</p><h1>{title || '중학교 시절 이야기'}</h1><label htmlFor="story-title">제목</label><input id="story-title" value={story.split('\n')[0] || ''} onChange={e => setStory(`${e.target.value}${story.includes('\n') ? story.slice(story.indexOf('\n')) : ''}`)} placeholder="" /><label htmlFor="story-body">나의 추억을 적어주세요</label><textarea wrap="soft" spellCheck={false} id="story-body" value={story.includes('\n') ? story.slice(story.indexOf('\n') + 1) : ''} onChange={e => setStory(`${story.split('\n')[0] || ''}\n${e.target.value}`)} placeholder="" /><label htmlFor="mission-body">상대에게 보낼 미션</label><textarea wrap="soft" spellCheck={false} className="mission-input" id="mission-body" value={mission} onChange={e => setMission(e.target.value)} placeholder="" /></section>
       {footer('완료', () => setStep('home-mission'))}
     </>}
 
@@ -65,7 +66,7 @@ export function DemoVideoFlow() {
 
     {step === 'reflection' && <>
       {header('챕터 미션')}
-      <section className="demo-form"><p className="chapter-kicker">chapter. 04</p><h1>{title || '중학교 시절 이야기'}</h1><p className="form-subtitle">엄마와 내가 모두 미션을 하면 챕터가 열려요.</p><div className="mission-prompt"><img src={ribbonGreen} alt=""/><span>엄마의 미션</span><p>{mission || '이 노래 들어보고 감상 남겨줘'}</p></div><label htmlFor="reflection">나의 후기를 적어주세요.</label><textarea id="reflection" value={reflection} onChange={e => setReflection(e.target.value)} placeholder="" /></section>
+      <section className="demo-form"><p className="chapter-kicker">chapter. 04</p><h1>{title || '중학교 시절 이야기'}</h1><p className="form-subtitle">엄마와 내가 모두 미션을 하면 중학교 시절 챕터가 열려요.</p><div className="demo-mission-prompt"><div className="demo-mission-heading"><img src={ribbonGreen} alt=""/><span>엄마의 미션</span></div><p>{mission || '이 노래 들어보고 감상 남겨줘'}</p></div><label htmlFor="reflection">나의 후기를 적어주세요.</label><textarea wrap="soft" spellCheck={false} id="reflection" value={reflection} onChange={e => setReflection(e.target.value)} placeholder="" /></section>
       {footer('후기 남기기', () => setStep('home-next'))}
     </>}
 
