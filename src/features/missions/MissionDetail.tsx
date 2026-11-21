@@ -13,14 +13,15 @@ export function MissionDetail({ chapterId, counterpart, onBack, onReadChapter }:
 
   useEffect(() => {
     let active = true
-    setLoading(true)
-    setError('')
     void missionApi.getChapter(chapterId).then((data) => {
       if (!active) return
       setChapter(data)
       setContent(data.myReflection?.content ?? '')
     }).catch((cause: unknown) => {
-      if (active) setError(cause instanceof ApiError ? cause.message : '챕터를 불러오지 못했어요.')
+      if (active) {
+        setChapter(null)
+        setError(cause instanceof ApiError ? cause.message : '챕터를 불러오지 못했어요.')
+      }
     }).finally(() => { if (active) setLoading(false) })
     return () => { active = false }
   }, [chapterId, reloadKey])
@@ -43,7 +44,7 @@ export function MissionDetail({ chapterId, counterpart, onBack, onReadChapter }:
 
   const navigation = <nav className="detail-nav"><button className="back-button" onClick={onBack} aria-label="홈으로"><img src={arrowRight} alt="" /></button><strong>챕터 미션</strong></nav>
   if (loading) return <main className="detail-page"><StatusBar />{navigation}<p className="detail-message">챕터를 불러오고 있어요…</p><HomeIndicator /></main>
-  if (error && !chapter) return <main className="detail-page"><StatusBar />{navigation}<div className="detail-message error" role="alert"><p>{error}</p><button className="retry-button" type="button" onClick={() => setReloadKey((key) => key + 1)}>다시 시도</button></div><HomeIndicator /></main>
+  if (error && !chapter) return <main className="detail-page"><StatusBar />{navigation}<div className="detail-message error" role="alert"><p>{error}</p><button className="retry-button" type="button" onClick={() => { setError(''); setLoading(true); setReloadKey((key) => key + 1) }}>다시 시도</button></div><HomeIndicator /></main>
   if (!chapter) return null
 
   const waiting = chapter.nextAction === 'WAIT_FOR_OPEN'

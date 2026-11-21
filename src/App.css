@@ -717,6 +717,265 @@ button { font: inherit; }
 .ios-home-indicator { position: fixed; z-index: 20; right: 0; bottom: 0; left: 0; display: flex; height: 36px; align-items: center; justify-content: center; pointer-events: none; }
 .ios-home-indicator span { width: 144px; height: 5px; margin-top: 4px; border-radius: 99px; background: #000; }
 
+.chapter-book-hero {
+  height: 430px;
+  background: var(--color-main-90);
+}
+
+.chapter-book-visual {
+  padding: 16px 24px 0;
+}
+
+.chapter-book-visual h1 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-black);
+  font-size: 24px;
+  line-height: 1.4;
+  letter-spacing: -0.48px;
+}
+
+.chapter-book-visual h1 i {
+  width: 24px;
+  height: 24px;
+  background: #d9d9d9;
+}
+
+.chapter-paper-stack {
+  position: relative;
+  height: 224px;
+  margin-top: 16px;
+}
+
+.chapter-paper-stack span {
+  position: absolute;
+  width: 244px;
+  height: 163px;
+  border-radius: 4px;
+}
+
+.chapter-paper-stack span:first-child {
+  top: 21px;
+  right: 0;
+  background: var(--color-main-60);
+  transform: rotate(10deg);
+}
+
+.chapter-paper-stack span:last-child {
+  top: 0;
+  left: 0;
+  border: 1px solid #e4e4e4;
+  background: var(--color-white);
+  transform: rotate(-4deg);
+}
+
+.chapter-list-content {
+  padding: 16px 24px 64px;
+}
+
+.chapter-list-content > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.chapter-list-content h2 {
+  margin: 0;
+  color: var(--color-gray-5);
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+}
+
+.chapter-list-content h2 strong {
+  margin: 0 4px;
+  color: var(--color-main-50);
+  font-size: 24px;
+}
+
+.chapter-list-content > header button {
+  width: 32px;
+  height: 32px;
+  padding: 4px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--color-gray-80);
+  cursor: pointer;
+}
+
+.chapter-list-content > header img { width: 24px; height: 24px; }
+
+.chapter-cards {
+  margin: 20px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  list-style: none;
+}
+
+.chapter-cards li {
+  position: relative;
+  min-height: 101px;
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  gap: 12px;
+}
+
+.chapter-number {
+  position: relative;
+  z-index: 1;
+  color: var(--color-main-50);
+  background: var(--color-white);
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.48px;
+}
+
+.chapter-timeline {
+  position: absolute;
+  top: 38px;
+  left: 9px;
+  width: 11px;
+  height: 63px;
+}
+
+.chapter-cards article {
+  min-height: 91px;
+  margin-top: 10px;
+  padding: 16px;
+  border: 1px solid var(--color-gray-50);
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-sizing: border-box;
+  background: var(--color-white);
+}
+
+.chapter-cards article h3 {
+  margin: 0;
+  color: var(--color-black);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.32px;
+}
+
+.chapter-tags {
+  margin-top: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chapter-tags span {
+  padding: 6px 10px;
+  border-radius: 2px;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.24px;
+}
+
+.chapter-tags .green { color: var(--color-green-20); background: var(--color-green-5); }
+.chapter-tags .pink { color: var(--color-pink-20); background: var(--color-pink-10); }
+.chapter-tags .purple { color: var(--color-purple-20); background: var(--color-purple-5); }
+
+.chapter-cards article button {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.chapter-cards article button img { width: 24px; height: 24px; }
+
+.chapter-create-content {
+  padding: 16px 24px 120px;
+}
+
+.chapter-create-heading strong {
+  color: var(--color-main-50);
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: -0.4px;
+}
+
+.chapter-create-heading h1 {
+  margin: 4px 0 0;
+  color: var(--color-black);
+  font-size: 24px;
+  line-height: 1.4;
+  letter-spacing: -0.48px;
+}
+
+.chapter-title-field {
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--color-gray-5);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -0.3px;
+}
+
+.chapter-title-field input {
+  width: 100%;
+  height: 56px;
+  padding: 16px;
+  border: 1px solid var(--color-gray-30);
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: var(--color-black);
+  background: var(--color-white);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.4;
+  outline: none;
+}
+
+.chapter-title-field input::placeholder { color: var(--color-gray-50); }
+.chapter-title-field input:focus { border-color: var(--color-main-50); }
+
+.chapter-info-box {
+  margin-top: 12px;
+  padding: 20px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: var(--color-gray-80);
+}
+
+.chapter-info-box strong {
+  color: var(--color-black);
+  font-size: 16px;
+  line-height: 1.4;
+  letter-spacing: -0.32px;
+}
+
+.chapter-info-box span {
+  color: var(--color-gray-40);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: -0.28px;
+}
+
+.chapter-create-footer {
+  position: absolute;
+  right: 24px;
+  bottom: 39px;
+  left: 24px;
+}
+
 @keyframes toast-in {
   from { opacity: 0; transform: translate(-50%, 8px); }
   to { opacity: 1; transform: translate(-50%, 0); }

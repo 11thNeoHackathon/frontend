@@ -74,12 +74,7 @@ export function ChapterReadingFlow({ chapterId, onBack }: Props) {
       }
     }
 
-    if (!chapterId.trim()) {
-      setError('챕터 ID가 필요해요.')
-      setLoading(false)
-    } else {
-      void loadChapter()
-    }
+    void loadChapter()
 
     return () => controller.abort()
   }, [chapterId])
