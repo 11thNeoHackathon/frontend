@@ -28,6 +28,7 @@ export type Chapter = {
 }
 export type Book = { bookId:number; title:string; status?:string; mySlotNo?:number; counterpartLabel?:string|null; counterpartName?:string|null }
 export type CreatedBook = { book:Book; invitation:{code:string; inviteUrl:string; expiresAt:string} }
+export type InvitationPreview = { status:'AVAILABLE'|'LINKED'; inviterName:string; bookTitle:string; expiresAt:string; bookId:number|null }
 export type Participant = { participantId:number; displayName:string; birthYear:number|null }
 export type ChapterDetails = Chapter & { openedAt:string|null; myStory:{title:string;content:string;missionInstruction:string}|null; counterpartStory:{title:string;content:string;missionInstruction:string}|null }
 
@@ -57,10 +58,11 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     throw new ApiError('서버에 연결할 수 없어요. 잠시 후 다시 시도해 주세요.', 0)
   }
   const body = (await response.json().catch(() => null)) as ApiEnvelope<T> | null
-  if (!response.ok || !body?.success || body.data === null) {
+  if (!response.ok || !body?.success) {
     throw new ApiError(body?.error?.message ?? '요청을 처리하지 못했어요.', response.status, body?.error?.code)
   }
-  return body.data
+  // 챕터 삭제처럼 성공해도 data가 null인 응답이 있다.
+  return body.data as T
 }
 
 export const missionApi = {
@@ -75,6 +77,9 @@ export const missionApi = {
     return participantRegistration
   },
   getParticipant: () => request<Participant>('/api/v1/participants/me'),
+  getInvitation: (code:string) => request<InvitationPreview>(`/api/v1/invitations/${encodeURIComponent(code)}`),
+  acceptInvitation: (code:string,input:{displayName?:string;counterpartLabel?:string}) =>
+    request<Book>(`/api/v1/invitations/${encodeURIComponent(code)}/accept`,{method:'POST',body:JSON.stringify(input)}),
   createChapter: (bookId:number,name:string) => request<Chapter>(`/api/v1/books/${bookId}/chapters`,{method:'POST',body:JSON.stringify({name})}),
   deleteChapter: (chapterId:number) => request<void>(`/api/v1/chapters/${chapterId}`,{method:'DELETE'}),
   getChapters: (bookId: number) => request<Chapter[]>(`/api/v1/books/${bookId}/chapters`),
